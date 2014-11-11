@@ -51,19 +51,20 @@
 <h1 id="top">'PERIDOT' - Simple & Compact FPGA board</h1>
 
 <div class="heading"><h2 id="overview">Overview</h2></div>
-<img src="https://lh3.googleusercontent.com/-yCNcTx9NGoA/U-LL8LLfGTI/AAAAAAAAHC4/eYjyNouEk0w/w600-h316-no/DSC02498_3.jpg" alt="Welcome to Physicaloid" />
+<img src="images/peridot/DSC02730_2.jpg" alt="Welcome to PERIDOT" />
 <p>PERIDOT(ペリドット)プロジェクトとは、シンプル＆コンパクトをコンセプトに開発中の新しいFPGAボードと、その統合開発環境です。<br />
-開発環境はWebベースのクラウドコンパイラとChromeアプリケーションで構築されており、OSを問わない新しい開発スタイルを提供します。<br />
+開発環境はWebベースのクラウドコンパイラとChromeアプリケーションで構築されており、OSを問わない新しい開発スタイルを提供します。
+<small>(※クラウド開発環境は現在準備中。2014年末開始予定)</small><br />
 また、FPGAボードには標準で通信ブロックも組み込まれています。
 オープン・ソースで公開されているライブラリを利用して、ChromeアプリケーションやAndroidアプリケーションからも簡単にアクセスすることができます。<br />
 </p>
 <br />
 
 <div class="heading"><h2 id="features">Features</h2></div>
-<img src="https://lh4.googleusercontent.com/-w47r5-Wg1KY/U-LL8LEMTKI/AAAAAAAAHC8/dp4UBKBEsj4/w600-h316-no/DSC02730_2.jpg" alt="Use to Physicaloid" />
+<img src="images/peridot/DSC02498_3.jpg" alt="Features of PERIDOT" />
 <p><ul>
 <li>Chromeアプリケーションからの直接コンフィグレーション</li>
-<li>JavaScriptからFPGA内部へのアクセス可能(Chrome Package Apps利用)</li>
+<li>JavaScriptからFPGA内部へのアクセス可能(Chrome Packaged Apps利用)</li>
 <li>公開されたプロトコルにより、各種ネイティブアプリからも利用可能</li>
 <li>ALTERA CycloneIV E(EP4CE6E22C8N)搭載</li>
 <li>64Mbit SDRAM搭載</li>
@@ -76,19 +77,19 @@
 <br />
 
 <div class="heading"><h2 id="board">Board pinout</h2></div>
-<img src="https://lh3.googleusercontent.com/-XxlwNOIA3iY/U6i-dM-9mwI/AAAAAAAAHAc/RHRm6UER750/w700-h565-no/PERIDOT_PINOUT.png" alt="PERIDOT Pinout diagram" />
-<p><a href="https://lh3.googleusercontent.com/-XxlwNOIA3iY/U6i-dM-9mwI/AAAAAAAAHAc/RHRm6UER750/w1560-h1260-no/PERIDOT_PINOUT.png" target=_blank>Large size</a>
+<img src="images/peridot/PINOUT.png" alt="PERIDOT Pinout diagram" />
+<p><a href="images/peridot/PERIDOT_PINOUT_Large.png" target=_blank>Large size</a>
 </p>
 <br />
 
 <div class="heading"><h2 id="interface">Interface</h2></div>
-<img src="https://lh3.googleusercontent.com/-mjnC-a-mvtM/UnhcuaqQL0I/AAAAAAAAFso/zZeyUkh4efw/w600-h468-no/peridot_board_connector.png" alt="PERIDOT Board Connector" />
+<img src="images/peridot/board_connector.png" alt="PERIDOT Board Connector" />
 <p><ul>
 <li>Manual RESET Key</li>
 システム全体のマニュアルリセットを行います。<br />
 <li>JTAG Connector</li>
 FPGAのJTAGピンが配置されています。<br />
-※v1.1ではJTAGを使ったjicファイルの書き込みはできません。EPCS FlashROMへの書き込みは別途Chromeアプリケーションを使用します。<br />
+<small>※v1.1ではJTAGを使ったjicファイルの書き込みはできません。EPCS FlashROMへの書き込みは別途Chromeアプリケーションを使用します。</small><br />
 <li>Config MODE Selector</li>
 ボードのコンフィグモードを切り替えます。スタンドアロンで動作させる場合はAS側に、ホストからPhysicaloidライブラリでコンフィグを行う場合はPS側にセットします。<br />
 <li>Power supply and RESET</li>
@@ -99,7 +100,7 @@ FPGAのI/Oピンが配置されています。3.3Vを超える電圧を加えな
 <br />
 
 <div class="heading"><h2 id="blockdiagram">Board block diagram</h2></div>
-<img src="https://lh3.googleusercontent.com/-XpoVXE45BRU/UnhcutSOYOI/AAAAAAAAFss/-6QsIh6Is40/w700-h327-no/peridot_block.png" alt="PERIDOT Block diagram" />
+<img src="images/peridot/block.png" alt="PERIDOT Block diagram" />
 <p>(*1) ASDIはスタンドアロンモードでのみ有効になります。<br />
 (*2) スタンドアロンモードではリコンフィグキーになります。<br />
 </p>
@@ -118,9 +119,9 @@ FPGAのI/Oピンが配置されています。3.3Vを超える電圧を加えな
 <span style="font-size:200%;">https://github.com/osafune/peridot</span></a>
 </p>
 <p>PERIDOTボードの回路図は下記のリンクからダウンロードできます。<br />
-<a href="https://drive.google.com/file/d/0Bw0BfOQoAOEEQVNYVk9Ga09zV0U/edit?usp=sharing" target=_blank>
+<a href="lib/peridot_pcb_schem_v1.1.pdf" target=_blank>
 <img alt="GoogleDrive-Mark" width="32" height="32" src="data:image/png;base64,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" />
-<span style="font-size:200%;">peridot_pcb_ver1.0.pdf</span></a>
+<span style="font-size:200%;">peridot_pcb_ver1.1.pdf</span></a>
 </p>
 <br />
 
