@@ -74,7 +74,7 @@
     <p>
         <ul>
             <li>300mil width DIP20 pin shape (substrate size 25.7 mm × 7.6 mm)</li>
-            <li>10M02DCV36 (2kLEs, 108kbit memory, 96kbit flash, VBGA36) used</li>
+            <li>10M02DCV36 (2kLEs, 108kbit memory, 96kbit flash, VBGA36)</li>
             <li>On-board OSC(50.0 MHz)</li>
             <li>User I/O up to 17pins</li>
             <li>3.0V/3.3V single-supply</li>
@@ -82,6 +82,10 @@
             <li>Universal PCB mount available for single-sided parts mounting</li>
             <li>Side-end face through terminal</li>
         </ul>
+    </p>
+    <p>
+        C-02 board block diagram<br />
+        <img src="images/sodalite/cerasite_diag.png" alt="CERASITE board block diagram" />
     </p>
     <br />
 
@@ -101,12 +105,13 @@
     <div class="heading">
         <h2 id="typicalconnections">Typical connections</h2>
     </div>
-    <img src="images/sodalite/ceratite_config.png" alt="CERASITE typical connections" />
+    <img src="images/sodalite/cerasite_config.png" alt="CERASITE typical connections" />
     <p>
         <ul>
             <li>Pins 3, 18, 19, 20 pull up internally and PIN 2 is pulled down internally.</li>
-            <li>If you use the JTAG feature pin as a user I/O, the JTAGEN pin is a function switching pin and cannot be used as a user I/O.</li>
             <li>If the nCONFIG pin is used as a user I/O, it is an input-only.</li>
+            <li>If you use the JTAG feature pin as a user I/O, the JTAGEN pin is a function switching pin and cannot be used as a user I/O. In that case, the JTAGEN pin should pull down with 1kΩ. Also, when using the JTAG function, the JTAGEN pin must be
+                fixed at H level.</li>
         </ul>
     </p>
     <br />
@@ -115,10 +120,10 @@
         <h2 id="download">Download</h2>
     </div>
     <p>C-02 Manual (PDF, Japanese)<br />
-        <a href="http://www.j7system.jp/doc/c-02_manual_v1.0.pdf" target=_blank>
+        <a href="http://www.j7system.jp/doc/c-02_manual_v1.1.pdf" target=_blank>
             <img alt="GoogleDrive-Mark" width="32" height="32" src="data:image/png;base64,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"
             />
-            <span style="font-size:200%;">c-02_manual_v1.0.pdf</span></a>
+            <span style="font-size:200%;">c-02_manual_v1.1.pdf</span></a>
     </p>
     <p>C-02 schematic (PDF)<br />
         <a href="lib/cerasite_c-02_shem.pdf" target=_blank>
@@ -135,7 +140,7 @@
         Twitter - <a href="https://twitter.com/s_osafune" target=_blank>＠s_osafune</a><br /> GitHub - <a href="https://github.com/osafune" target=_blank>osafune</a><br/>
     </p>
 
-    <div align=right style="color:#006b6b;"><strong>&copy;2014-2018 J-7SYSTEM WORKS LIMITED.</strong></div>
+    <div align=right style="color:#006b6b;"><strong>&copy;2014-2019 J-7SYSTEM WORKS LIMITED.</strong></div>
 </body>
 
 </html>
