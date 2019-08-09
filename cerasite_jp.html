@@ -61,72 +61,70 @@
 
 <body>
 
-    <h1 id="top">'CERASITE' - DIP scale FPGA board</h1>
-    <div align=right>English / <a href="cerasite_jp.html">日本語</a></div>
+    <h1 id="top">'CERASITE' - DIPスケールFPGAボード</h1>
+    <div align=right><a href="cerasite.html">English</a> / 日本語</div>
 
     <div class="heading">
         <h2 id="overview">Overview</h2>
     </div>
     <img src="images/sodalite/cerasite_thumb.jpg" alt="CERASITE C-02" />
     <p>
-        'CERASITE C-02' is a very small FPGA board that realized DIP scale size 300mil width.<br /> The Intel MAX 10 series is adopted as an FPGA device. The power supply circuit and oscillator are also mounted on board, making it ideal for installation
-        and prototyping as a programmable logic board that instant operation.<br />
+        CERASITE(セラサイト) C-02は300mil幅DIPサイズの超小型のFPGAボードです。<br /> Intel MAX10 FPGA搭載し、電源回路、OSCをコンパクトに集積しています。外形寸法は300mil幅20ピンDIP ICと同等になっており、ユニバーサル基板やブレッドボードでのプロトタイピングに最適です。<br />
     </p>
     <p>
         <ul>
-            <li>300mil width DIP20 pin shape (substrate size 25.7 mm × 7.6 mm)</li>
-            <li>10M02DCV36 (2kLEs, 108kbit memory, 96kbit flash, VBGA36)</li>
-            <li>On-board OSC(50.0 MHz)</li>
-            <li>User I/O up to 17pins</li>
-            <li>3.0V/3.3V single-supply</li>
-            <li>One user LED</li>
-            <li>Universal PCB mount available for single-sided parts mounting</li>
-            <li>Side-end face through terminal</li>
+            <li>300mil幅20ピンDIPサイズ(25.7 mm × 7.6 mm)</li>
+            <li>Intel MAX10 10M02DCV36 (2kLEs, 108kbitメモリー, 96kbit flash, VBGA36)</li>
+            <li>オンボードOSC (50.0 MHz)</li>
+            <li>最大17本のユーザーI/O数</li>
+            <li>3.0V/3.3V単電源駆動</li>
+            <li>ユーザーLEDを1個搭載</li>
+            <li>PCBに直接マウント可能な片面実装</li>
+            <li>ユニバーサル基板で使いやすい端面スルーホール</li>
         </ul>
     </p>
     <p>
-        C-02 board block diagram<br />
+        C-02 ボードブロック図<br />
         <img src="images/sodalite/cerasite_diag.png" alt="CERASITE board block diagram" />
     </p>
     <br />
 
     <div class="heading">
-        <h2 id="boardpinout">Board pinout</h2>
+        <h2 id="boardpinout">ボードピン配置図</h2>
     </div>
     <img src="images/sodalite/cerasite_pin.png" alt="CERASITE Pinout diagram" />
     <p>
         <ul>
-            <li>TDO, TCK, TDI, TMS and JTAGEN are user I/O exclusive use.</li>
-            <li>nCONFIG is only available for input.</li>
-            <li>For more information about device and I/O features, see max10 Device Data Sheet.</li>
+            <li>TDO, TCK, TDI, TMSおよびJTAGENはユーザーI/Oと排他利用です。</li>
+            <li>nCONFIGは入力専用ピンです。</li>
+            <li>デバイスやI/O機能の詳細はIntel MAX10デバイスデータシートを参照してください。</li>
         </ul>
     </p>
     <br />
 
     <div class="heading">
-        <h2 id="typicalconnections">Typical connections</h2>
+        <h2 id="typicalconnections">代表的な結線</h2>
     </div>
     <img src="images/sodalite/cerasite_config.png" alt="CERASITE typical connections" />
     <p>
         <ul>
-            <li>Pins 3, 18, 19, 20 pull up internally and PIN 2 is pulled down internally.</li>
-            <li>If the nCONFIG pin is used as a user I/O, it is an input-only.</li>
-            <li>If you use the JTAG feature pin as a user I/O, the JTAGEN pin is a function switching pin and cannot be used as a user I/O. In that case, the JTAGEN pin should pull down with 1kΩ. Also, when using the JTAG function, the JTAGEN pin must be
-                fixed at H level.</li>
+            <li>3, 18, 19, 20番ピンは内部で10kΩでプルアップされています。また2番ピンは内部で1kΩでプルダウンされています。</li>
+            <li>nCONFIGピンをユーザーI/Oとして使う場合は入力ピンとしてのみ使用できます。</li>
+            <li>JTAGピンをユーザーI/Oとして使う場合はJTAGENピンは機能切り替えピンとして動作し、ユーザーI/Oとしては使えません。ユーザーI/Oに切り替える場合はJTAGENピンは1kΩでプルダウンします。JTAG機能に切り替える場合はJTAGENピンをHレベルに固定します。</li>
         </ul>
     </p>
     <br />
 
     <div class="heading">
-        <h2 id="download">Download</h2>
+        <h2 id="download">ダウンロード</h2>
     </div>
-    <p>C-02 Manual (PDF, Japanese)<br />
+    <p>C-02 取り扱い説明書 (PDF)<br />
         <a href="http://www.j7system.jp/doc/c-02_manual_v1.1.pdf" target=_blank>
             <img alt="GoogleDrive-Mark" width="32" height="32" src="data:image/png;base64,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"
             />
             <span style="font-size:200%;">c-02_manual_v1.1.pdf</span></a>
     </p>
-    <p>C-02 schematic (PDF)<br />
+    <p>C-02 回路図 (PDF)<br />
         <a href="lib/cerasite_c-02_shem.pdf" target=_blank>
             <img alt="GitHub-Mark" width="32" height="32" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyRpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoTWFjaW50b3NoKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpFNTE3OEEyQTk5QTAxMUUyOUExNUJDMTA0NkE4OTA0RCIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDpFNTE3OEEyQjk5QTAxMUUyOUExNUJDMTA0NkE4OTA0RCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkU1MTc4QTI4OTlBMDExRTI5QTE1QkMxMDQ2QTg5MDREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOkU1MTc4QTI5OTlBMDExRTI5QTE1QkMxMDQ2QTg5MDREIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+m4QGuQAAAyRJREFUeNrEl21ojWEYx895TDPbMNlBK46IUiNmPvHBSUjaqc0H8pF5+aDUKPEBqU2NhRQpX5Rv5jWlDIWlMCv7MMSWsWwmb3tpXub4XXWdPHvc9/Gc41nu+nedc7/8r/99PffLdYdDPsvkwsgkTBwsA/PADJCnzX2gHTwBt8Hl7p537/3whn04XoDZDcpBlk+9P8AFcAghzRkJwPF4zGGw0Y9QS0mAM2AnQj77FqCzrtcwB1Hk81SYojHK4DyGuQ6mhIIrBWB9Xm7ug/6B/nZrBHBegrkFxoVGpnwBMSLR9EcEcC4qb8pP14BWcBcUgewMnF3T34VqhWMFkThLJAalwnENOAKiHpJq1FZgI2AT6HZtuxZwR9GidSHtI30jOrbawxlVX78/AbNfhHlomEUJJI89O2MqeE79T8/nk8nMBm/dK576hZgmA3cp/R4l9/UeSxiHLVIlNm4nFfT0bxyuIj7LHRTKai+zdJobwMKzcZSJb0ePV5PKN+BqAAKE47UlMnERELMM3EdYP/yrd+XYb2mOiYBiQ8OQnoRBlXrl9JZix7D1pHTazu4MoyBcnYamqAjIMTR8G4FT8LuhLsexXYYjICBiqhQBvYb6fLZIJCjPypVvaOoVAW2WcasCnL2Nq82xHJNSqlCeFcDshaPK0twkAhosjZL31QYw+1rlMpWGMArl23SBsZZO58F2tlJXmjOXS+s4WGvpMiBJT/I2PInZ6lIs9/hBsNS1hS6BG0DSqmYEDRlCXQrmy50P1oDRKTSegmNbUsA0zDMwRhPJXeCE3vWLPQMvan6X8AgIa1vcR4AkGZkDR4ejJ1UHpsaVI0g2LInpOsNFUud1rhxSV+fzC9Woz2EZkWQuja7/B+jUrgtIMpy9YCW4n4K41YfzRneW5E1KJTe4B2Zq1Q5EHEtj4U3AfEzR5SVY4l7QYQPJdN2as7RKBF0BPZqqH4VgMAMBL8Byxr7y8zCZiDlnOcEKIPmUpgB5Z2ww5RdOiiRiNajUmWda5IG6WbhsyY2fx6m8gLcoJDJFkH219M3We1+cnda93pfycZpIJEL/s/wSYADmOAwAQgdpBAAAAABJRU5ErkJggg=="
             />
@@ -135,7 +133,7 @@
     <br />
 
     <div class="heading">
-        <h2 id="buynow">Buy now</h2>
+        <h2 id="buynow">購入先</h2>
     </div>
     <p>
         <iframe frameborder="0" height="240" width="320" src="https://peridotcraft.buyshop.jp/items/3105609/widget/multi/320/240"></iframe>
@@ -143,7 +141,7 @@
     <br />
 
     <div class="heading">
-        <h2 id="contact">Contact us</h2>
+        <h2 id="contact">連絡先</h2>
     </div>
     <p>
         Twitter - <a href="https://twitter.com/s_osafune" target=_blank>＠s_osafune</a><br /> GitHub - <a href="https://github.com/osafune" target=_blank>osafune</a><br/>
