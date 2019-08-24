@@ -47,18 +47,16 @@ NGC4755はSPIインターフェースでホストMCUと通信を行います。S
 |0x000080|32|[PERIDOT SERVO](https://github.com/osafune/peridot_peripherals/blob/master/doc/peridot_servo_doc_r2_j.pdf)|CH6～11までの6チャネル分でインスタンスされています|
 |0x000100|8|[PERIDOT LED](https://github.com/osafune/peridot_peripherals/blob/master/doc/peridot_led_doc_r4_j.pdf)|PERIDOT LEDペリフェラルの制御レジスタ(CSR)|
 |0x008000|8192|PERIDOT LED|PERIDOT LEDペリフェラルのピクセルメモリ(MEM)|
-||
 
 ### NGC4755固有の設定
-- CRASITE SYSUIDペリフェラル
+- CRASITE SYSUIDペリフェラル  
   |レジスタ名|値|備考|
   ---|---|---
   |SYSUID|0x72A91000||
   |TIMECODE|1566657318|REV.A0190824での生成値|
-  ||
 
 - CERASITE PIOペリフェラル  
-PIOファンクションはCH6～11までの6ポート分でインスタンスされています。DIN/DOUTとの対応は以下の通りです。
+PIOファンクションはCH6～11までの6ポート分でインスタンスされています。DIN/DOUTとの対応は以下の通りです。  
   |チャネル|PIOポート|
   ---|---
   |CH6|DIN[0] / DOUT[0]|
@@ -67,19 +65,17 @@ PIOファンクションはCH6～11までの6ポート分でインスタンス�
   |CH9|DIN[3] / DOUT[3]|
   |CH10|DIN[4] / DOUT[4]|
   |CH11|DIN[5] / DOUT[5]|
-  ||
 
-  また機能選択レジスタのマッピングは以下の通りです。
+  また機能選択レジスタのマッピングは以下の通りです。  
   |FUNCn|機能|
   ---|---
   |00|PIO|
   |01|PERIDOT LED|
   |10|PERIDOT SERVO のPWM|
   |11|CH6～9: PERIDOT SERVO のDSM<br>CH10: 予約(0固定)<br>CH11: PERIDOT LEDの割り込み出力|
-  ||
 
 - PERIDOT SERVOペリフェラル  
-サーボ数はCH6～11までの6チャネル分でインスタンスされています。機能割り当てはPIOペリフェラルのFUNCnレジスタで設定します。
+サーボ数はCH6～11までの6チャネル分でインスタンスされています。機能割り当てはPIOペリフェラルのFUNCnレジスタで設定します。  
   |チャネル|サーボ出力|DSM(アナログ出力)|
   ---|---|---
   |CH6|PWM0|dsm_out[0]|
@@ -88,10 +84,9 @@ PIOファンクションはCH6～11までの6ポート分でインスタンス�
   |CH9|PWM3|dsm_out[3]|
   |CH10|PWM4|なし|
   |CH11|PWM5|なし|
-  ||
 
 - PERIDOT LEDペリフェラル  
-PERIDOT LEDファンクションは下記のパラメータで生成されています。
+PERIDOT LEDファンクションは下記のパラメータで生成されています。  
   |生成時パラメータ|設定値|
   ---|---|
   |チャネル数|12|
@@ -99,10 +94,9 @@ PERIDOT LEDファンクションは下記のパラメータで生成されてい
   |外部トリガ機能|あり|
   |レイヤー合成機能|あり|
   |エフェクト機能|あり|
-  ||
 
   全12チャネルのうち、CH0～5 はシリアルLED専用です。CH6～11 はPIOペリフェラルのFUNCnレジスタで設定します。  
-  外部トリガはCH6～11の6本から入力することができます。マッピングは下記の通りです。
+  外部トリガはCH6～11の6本から入力することができます。マッピングは下記の通りです。  
   |チャネル|外部トリガ選択レジスタ(SEL)設定値|
   ---|---
   |CH6|0110|
@@ -111,7 +105,6 @@ PERIDOT LEDファンクションは下記のパラメータで生成されてい
   |CH9|1001|
   |CH10|1010|
   |CH11|1011|
-  ||
   ※この機能を使う場合は、該当のチャネルをPIOの入力モードに設定しておかなければなりません。
 
 
