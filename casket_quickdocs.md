@@ -61,11 +61,11 @@ NGC4755はSPIインターフェースでホストMCUと通信を行います。S
 |0x008000|8192|PERIDOT LED|PERIDOT LEDペリフェラルのピクセルメモリ(MEM)|
 
 ### NGC4755固有の設定
-- CRASITE SYSUIDペリフェラル  
+- CERASITE SYSUIDペリフェラル  
 
   |レジスタ名|値|備考|
   ---|---|---
-  |SYSUID|0x72A91000||
+  |SYSTEMID|0x72A91000||
   |TIMECODE|1566657318|REV.A0190824での生成値|
 
 - CERASITE PIOペリフェラル  
