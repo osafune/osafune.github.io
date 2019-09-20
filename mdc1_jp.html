@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>'MDC-1' - FM/PCM Digital Signal Converter</title>
+
+    <style type="text/css">
+        body {
+            width: 750px;
+            margin: 15px;
+            padding: 0;
+            font-family: 'Segoe UI', Arial, Meiryo, 'MS PGothic', sans-serif;
+            font-size: 11pt;
+            line-height: 1.4;
+            color: #303830;
+        }
+        
+        h1 {
+            font-size: 200%;
+            color: #006b6b;
+            text-shadow: 5px 5px 10px #d0d0d0;
+        }
+        
+        img {
+            border: none;
+        }
+        
+        p {
+            padding: 3px 10px 3px 15px;
+        }
+        
+        li {
+            margin: 0.5em 0 0 0;
+        }
+        
+        div.heading {
+            width: 100%;
+            /* 見出しエリアの幅 */
+            margin-bottom: 1em;
+            padding: 4px 0px;
+            /* 見出しエリアのパディング（上下、左右） */
+            border-bottom: 1px #4c4c4c solid;
+            /* 見出しエリアの下境界線 */
+        }
+        
+        div.heading h2 {
+            /* 見出し文字の設定 */
+            margin: 0;
+            padding: 3px 3px 0px 5px;
+            /* 見出しのパディング（上右下左） */
+            border-left: 10px #a4c639 solid;
+            /* 見出しの左境界線 */
+            font-size: 150%;
+            /* 見出しの文字サイズ */
+            color: #006b6b;
+            line-height: 100%;
+        }
+        
+        table {
+            border-collapse: collapse;
+            margin: 0 auto;
+        }
+        
+        th {
+            color: #005ab3;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #eee
+        }
+        
+        td {
+            border-bottom: 1px dashed #999;
+        }
+        
+        th,
+        tr:last-child td {
+            border-bottom: 2px solid #005ab3;
+        }
+        
+        td,
+        th {
+            padding: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1 id="top">'MDC-1' - FM/PCM音源マルチデータコンバーター</h1>
+    <div align=right>
+        <!--<a href="mdc1.html">English</a> / 日本語<br />-->
+        rev.A - 2019/09/20
+    </div>
+
+    <div class="heading">
+        <h2 id="overview">Overview</h2>
+    </div>
+    <img src="images/mdc1/mdc1_thumb.jpg" alt="MDC-1" />
+    <p>
+        MDC-1は各種のFM音源ICおよびPCM音源ICのディジタルデータを48k S/PDIF光出力にミキシングします。 2つの入力チャネルを持っており、それぞれ個別の音源ICのディジタルデータを受信することができます。<br /> アナログ信号を介さずにディジタルデータをそのままS/PDIFに変換するため、レトロPCやゲーム基板の音源を簡単に高音質化できます。
+        <br />
+        <ul>
+            <li>音源ICのディジタル信号を48kHz/16bit S/PDIFに変換して出力。</li>
+            <li>FM音源ICはYM2151をはじめ、主要なチップのDACインターフェースをカバー。</li>
+            <li>PCM音源ICは16bit右詰めフォーマットまたはI2Sに対応。</li>
+            <li>2つの入力チャネルのミキシング出力が可能。</li>
+            <li>15kHz～62.5kHzの幅広いサンプリングレートに対応。</li>
+            <li>コンパクトな基板サイズ（38mm×70mm）で機器組み込みが容易。</li>
+        </ul>
+    </p>
+    <br />
+
+    <div class="heading">
+        <h2 id="cautions">注意事項</h2>
+    </div>
+    <p>
+        MDC-1について下記事項を了承の上で使用してください。
+    </p>
+    <p>
+        <ul>
+            <li>MDC-1は対象基板への取り付けを目的とした部品です。対象基板の改造については自己責任で行って下さい。</li>
+            <li>MDC-1のボード上には破損しやすい部品が実装されています。たわみや衝撃が加わると故障する場合があります。設置場所に注意してください。</li>
+            <li>MDC-1の対応音源ICはテスト環境下での確認です。全てのPC・ゲーム基板等での動作を保証するものではありません。</li>
+            <li>元音源は著作権で保護されている場合があります。</li>
+            <li>MDC-1を使用したことで発生する問題・損害について、S.OSAFUNEおよびJ-7SYSTEM WORKS LIMITEDはその責を負いません。</li>
+        </ul>
+    </p>
+    <br />
+
+    <div class="heading">
+        <h2 id="boardconnector">ボードコネクタ配置図</h2>
+    </div>
+    <img src="images/mdc1/mdc1_conn.png" alt="MDC-1 Connector diagram" />
+    <p>
+        <ul>
+            <li><strong>電源・信号入力コネクタ</strong><br /> ボードへの電源および音源ICからのディジタルデータを入力するコネクタです。<br /> +5V inを対象基板の5Vへ、GNDを対象基板のGNDまたは音源ICのVssへ接続します。それ以外の端子の接続については次項を参照してください。
+                <br /> 適合ハウジング：JST XHP-9<br />
+            </li>
+            <li><strong>CH1/CH2入力モード選択</strong><br /> CH1およびCH2の入力モードを選択するスイッチです。設定詳細については次項を参照してください。
+                <br />
+            </li>
+            <li><strong>ミキシングVR</strong><br /> CH1とCH2のバランスを調整するボリュームです。CWでCH2、CCWでCH1の音量が上がります。
+                <br />
+            </li>
+            <li><strong>S/PDIF光出力</strong><br /> ミキシングされたディジタル音声データが出力される角形光コネクタです。音源ICの音声は全て48kHz/16bitへ変換されて出力されます。
+                <br />
+            </li>
+            <li><strong>モニター用LINE出力</strong><br /> モニター用にLINEレベルのステレオ音声が出力されるφ3.5ステレオミニジャックです。モニター用途に限定しているため、高音質ではありません。
+                <br />
+            </li>
+        </ul>
+    </p>
+    <br />
+
+    <div class="heading">
+        <h2 id="modesettings">モード設定と接続</h2>
+    </div>
+    <p>
+        <ul>
+            <li><strong>CH1:FM音源ICの接続表</strong>
+                <table>
+                    <tr>
+                        <th>音源IC</th>
+                        <th>DIPSW1</th>
+                        <th>DIPSW2</th>
+                        <th>CH1-DCK</th>
+                        <th>CH1-SD</th>
+                        <th>CH1-SH1</th>
+                        <th>CH1-SH2</th>
+                    </tr>
+                    <tr>
+                        <td>YM2151</td>
+                        <td>ON</td>
+                        <td>ON</td>
+                        <td>PIN23 (φ1)</td>
+                        <td>PIN21 (SO)</td>
+                        <td>PIN20 (SH1)</td>
+                        <td>PIN19 (SH2)</td>
+                    </tr>
+                    <tr>
+                        <td>YM2608</td>
+                        <td>OFF</td>
+                        <td>ON</td>
+                        <td>PIN64 (φS)</td>
+                        <td>PIN31 (DPO)</td>
+                        <td>PIN29 (SH1)</td>
+                        <td>PIN30 (SH2)</td>
+                    </tr>
+                    <tr>
+                        <td>YM2610</td>
+                        <td>OFF</td>
+                        <td>ON</td>
+                        <td>PIN64 (φS)</td>
+                        <td>PIN31 (DPO)</td>
+                        <td>PIN29 (SH1)</td>
+                        <td>PIN30 (SH2)</td>
+                    </tr>
+                    <tr>
+                        <td>YMF262-M</td>
+                        <td>OFF</td>
+                        <td>ON</td>
+                        <td>PIN23 (φS)</td>
+                        <td>PIN21 (DOAB)</td>
+                        <td>PIN20 (SMPAC)</td>
+                        <td>PIN19 (SMPBD)</td>
+                    </tr>
+                    <tr>
+                        <td>YMF262-S</td>
+                        <td>OFF</td>
+                        <td>ON</td>
+                        <td>PIN39 (φS)</td>
+                        <td>PIN36 (DOAB)</td>
+                        <td>PIN35 (SMPAC)</td>
+                        <td>PIN33 (SMPBD)</td>
+                    </tr>
+                    <tr>
+                        <td>YMF276-M</td>
+                        <td>ON</td>
+                        <td>OFF</td>
+                        <td>PIN19 (BCO)</td>
+                        <td>PIN20 (SDO)</td>
+                        <td>PIN22 (LRO)</td>
+                        <td>n.c</td>
+                    </tr>
+                    <tr>
+                        <td>YMF288-M</td>
+                        <td>ON</td>
+                        <td>OFF</td>
+                        <td>PIN23 (BCO)</td>
+                        <td>PIN24 (SDO)</td>
+                        <td>PIN26 (LRO)</td>
+                        <td>n.c</td>
+                    </tr>
+                    <tr>
+                        <td>YMF288-S</td>
+                        <td>ON</td>
+                        <td>OFF</td>
+                        <td>PIN44 (BCO)</td>
+                        <td>PIN46 (SDO)</td>
+                        <td>PIN54 (LRO)</td>
+                        <td>n.c</td>
+                    </tr>
+                    <tr>
+                        <td>YMF297</td>
+                        <td>ON</td>
+                        <td>OFF</td>
+                        <td>PIN24 (BCO)</td>
+                        <td>PIN25 (SDO)</td>
+                        <td>PIN26 (LRO)</td>
+                        <td>n.c</td>
+                    </tr>
+                    <tr>
+                        <td>YM2203</td>
+                        <td>OFF</td>
+                        <td>OFF</td>
+                        <td>PIN39 (φS)</td>
+                        <td>PIN23 (DPO)</td>
+                        <td>PIN22 (SH)</td>
+                        <td>n.c</td>
+                    </tr>
+                    <tr>
+                        <td>YM3526</td>
+                        <td>OFF</td>
+                        <td>OFF</td>
+                        <td>PIN23 (φSY)</td>
+                        <td>PIN21 (MO)</td>
+                        <td>PIN20 (SH)</td>
+                        <td>n.c</td>
+                    </tr>
+                    <tr>
+                        <td>YM3812</td>
+                        <td>OFF</td>
+                        <td>OFF</td>
+                        <td>PIN23 (φSY)</td>
+                        <td>PIN21 (MO)</td>
+                        <td>PIN20 (SH)</td>
+                        <td>n.c</td>
+                    </tr>
+                    <tr>
+                        <td>CH1未使用時</td>
+                        <td>X</td>
+                        <td>X</td>
+                        <td>n.c</td>
+                        <td>n.c</td>
+                        <td>n.c</td>
+                        <td>n.c</td>
+                    </tr>
+                </table>
+            </li>
+            <li>YM2203,YM3526,YM3812の入力モードではモノラルになります。</li>
+            <li>音源ICからMDC-1までは極力短い配線で接続してください。</li>
+        </ul>
+        <br />
+        <ul>
+            <li><strong>CH2:PCM音源ICの接続表</strong>
+                <table width="90%">
+                    <tr>
+                        <th>音源IC</th>
+                        <th>DIPSW3</th>
+                        <th>DIPSW4</th>
+                        <th>CH2-BCLK</th>
+                        <th>CH2-SDAT</th>
+                        <th>CH2-LRCK</th>
+                    </tr>
+                    <tr>
+                        <td>SPC700</td>
+                        <td>OFF</td>
+                        <td>ON</td>
+                        <td>PIN42 (BCK)</td>
+                        <td>PIN44 (DATA)</td>
+                        <td>PIN43 (LRCK)</td>
+                    </tr>
+                    <tr>
+                        <td>C140</td>
+                        <td>OFF</td>
+                        <td>ON</td>
+                        <td>PIN94 (BCK)</td>
+                        <td>PIN97 (DATA)</td>
+                        <td>PIN96 (LRCK)</td>
+                    </tr>
+                    <tr>
+                        <td>C219</td>
+                        <td>OFF</td>
+                        <td>ON</td>
+                        <td>PIN116 (BCK)</td>
+                        <td>PIN120 (DATA)</td>
+                        <td>PIN115 (LRCK)</td>
+                    </tr>
+                    <tr>
+                        <td>C352</td>
+                        <td>OFF</td>
+                        <td>ON</td>
+                        <td>PIN88 (BCK)</td>
+                        <td>PIN91 (DAT0)</td>
+                        <td>PIN89 (LRCK)</td>
+                    </tr>
+                    <tr>
+                        <td>YMZ770C</td>
+                        <td>OFF</td>
+                        <td>ON</td>
+                        <td>PIN31 (BCO)</td>
+                        <td>PIN33 (SDO)</td>
+                        <td>PIN32 (LRO)</td>
+                    </tr>
+                    <tr>
+                        <td>CXD2938Q</td>
+                        <td>OFF</td>
+                        <td>ON</td>
+                        <td>PIN157 (BCKO)</td>
+                        <td>PIN155 (DATO)</td>
+                        <td>PIN156 (LRCO)</td>
+                    </tr>
+                    <tr>
+                        <td>ES5505</td>
+                        <td>ON</td>
+                        <td>ON</td>
+                        <td>PIN?? (BCLK)</td>
+                        <td>PIN?? (SD)</td>
+                        <td>PIN?? (WS)</td>
+                    </tr>
+                    <!--<tr>
+                        <td>MSM6258V</td>
+                        <td>OFF</td>
+                        <td>OFF</td>
+                        <td>PIN19 (SOCK)</td>
+                        <td>PIN18 (DASO)</td>
+                        <td>PIN42 (VCK)</td>
+                    </tr>-->
+                    <tr>
+                        <td>CH2未使用時</td>
+                        <td>X</td>
+                        <td>X</td>
+                        <td>n.c</td>
+                        <td>n.c</td>
+                        <td>n.c</td>
+                    </tr>
+                </table>
+            </li>
+            <li>YMF276,YMF288,YMF297についてはCH2に接続することもできます。</li>
+            <li>音源ICからMDC-1までは極力短い配線で接続してください。</li>
+            <li>この表以外にも16bit-RJフォーマットまたはI2Sフォーマットで出力する音源ICを接続することができます。</li>
+        </ul>
+    </p>
+    <br />
+    <!--
+    <div class="heading">
+        <h2 id="buynow">購入先</h2>
+    </div>
+    <p>
+        <iframe frameborder="0" height="240" width="320" src="https://peridotcraft.buyshop.jp/items/3105609/widget/multi/320/240"></iframe>
+    </p>
+    <br />
+    -->
+    <div class="heading">
+        <h2 id="contact">連絡先</h2>
+    </div>
+    <p>
+        Twitter - <a href="https://twitter.com/s_osafune" target=_blank>＠s_osafune</a><br /> GitHub - <a href="https://github.com/osafune" target=_blank>osafune</a><br/>
+    </p>
+
+    <div align=right style="color:#006b6b;"><strong>&copy;2019 J-7SYSTEM WORKS LIMITED.</strong></div>
+</body>
+
+</html>
