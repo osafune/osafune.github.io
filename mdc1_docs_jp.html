@@ -91,7 +91,7 @@
     <h1 id="top">'MDC-1' - FM/PCM音源マルチデータコンバーター</h1>
     <div align=right>
         <!--<a href="mdc1.html">English</a> / 日本語<br />-->
-        rev.A - 2019/09/20
+        rev.A - 2019/09/29
     </div>
 
     <div class="heading">
@@ -305,17 +305,9 @@
                         <th>CH2-LRCK</th>
                     </tr>
                     <tr>
-                        <td>SPC700</td>
-                        <td>OFF</td>
-                        <td>ON</td>
-                        <td>PIN42 (BCK)</td>
-                        <td>PIN44 (DATA)</td>
-                        <td>PIN43 (LRCK)</td>
-                    </tr>
-                    <tr>
                         <td>C140</td>
-                        <td>OFF</td>
                         <td>ON</td>
+                        <td>OFF</td>
                         <td>PIN94 (BCK)</td>
                         <td>PIN97 (DATA)</td>
                         <td>PIN96 (LRCK)</td>
@@ -337,12 +329,28 @@
                         <td>PIN89 (LRCK)</td>
                     </tr>
                     <tr>
+                        <td>YMZ280B</td>
+                        <td>OFF</td>
+                        <td>ON</td>
+                        <td>PIN16 (BCO)</td>
+                        <td>PIN17 (DO)</td>
+                        <td>PIN14 (LRO)</td>
+                    </tr>
+                    <tr>
                         <td>YMZ770C</td>
                         <td>OFF</td>
                         <td>ON</td>
                         <td>PIN31 (BCO)</td>
                         <td>PIN33 (SDO)</td>
                         <td>PIN32 (LRO)</td>
+                    </tr>
+                    <tr>
+                        <td>SPC700</td>
+                        <td>OFF</td>
+                        <td>ON</td>
+                        <td>PIN42 (BCK)</td>
+                        <td>PIN44 (DATA)</td>
+                        <td>PIN43 (LRCK)</td>
                     </tr>
                     <tr>
                         <td>CXD2938Q</td>
@@ -378,6 +386,7 @@
                     </tr>
                 </table>
             </li>
+            <li>C140はSYSTEM-IIボード時の設定です。SYSTEM21では異なる場合があります。</li>
             <li>YMF276,YMF288,YMF297についてはCH2に接続することもできます。</li>
             <li>音源ICからMDC-1までは極力短い配線で接続してください。</li>
             <li>この表以外にも16bit-RJフォーマットまたはI2Sフォーマットで出力する音源ICを接続することができます。</li>
