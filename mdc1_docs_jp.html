@@ -91,7 +91,7 @@
     <h1 id="top">'MDC-1' - FM/PCM音源マルチデータコンバーター</h1>
     <div align=right>
         <!--<a href="mdc1.html">English</a> / 日本語<br />-->
-        rev.A - 2019/09/29
+        rev.A - 2019/10/02
     </div>
 
     <div class="heading">
@@ -291,6 +291,7 @@
             </li>
             <li>YM2203,YM3526,YM3812の入力モードではモノラルになります。</li>
             <li>音源ICからMDC-1までは極力短い配線で接続してください。</li>
+            <li>この表以外にも16bit-RJフォーマットで出力する音源ICを接続することができます。</li>
         </ul>
         <br />
         <ul>
@@ -361,21 +362,21 @@
                         <td>PIN156 (LRCO)</td>
                     </tr>
                     <tr>
-                        <td>ES5505</td>
+                        <td>TAITO F3<br />(TDA1543)</td>
                         <td>ON</td>
                         <td>ON</td>
-                        <td>PIN?? (BCLK)</td>
-                        <td>PIN?? (SD)</td>
-                        <td>PIN?? (WS)</td>
+                        <td>PIN1 (BCK)</td>
+                        <td>PIN3 (DATA)</td>
+                        <td>PIN2 (WS)</td>
                     </tr>
-                    <!--<tr>
+                    <tr>
                         <td>MSM6258V</td>
                         <td>OFF</td>
                         <td>OFF</td>
                         <td>PIN19 (SOCK)</td>
                         <td>PIN18 (DASO)</td>
                         <td>PIN42 (VCK)</td>
-                    </tr>-->
+                    </tr>
                     <tr>
                         <td>CH2未使用時</td>
                         <td>X</td>
@@ -387,6 +388,8 @@
                 </table>
             </li>
             <li>C140はSYSTEM-IIボード時の設定です。SYSTEM21では異なる場合があります。</li>
+            <li>TAITO F3ボード(ES5505)に接続する場合はTDA1543のI2S信号に接続します。</li>
+            <li>MSM6258Vの入力モードではモノラルになります。</li>
             <li>YMF276,YMF288,YMF297についてはCH2に接続することもできます。</li>
             <li>音源ICからMDC-1までは極力短い配線で接続してください。</li>
             <li>この表以外にも16bit-RJフォーマットまたはI2Sフォーマットで出力する音源ICを接続することができます。</li>
