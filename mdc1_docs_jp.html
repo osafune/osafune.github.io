@@ -91,7 +91,7 @@
     <h1 id="top">'MDC-1' - FM/PCM音源マルチデータコンバーター</h1>
     <div align=right>
         <!--<a href="mdc1.html">English</a> / 日本語<br />-->
-        rev.A - 2019/10/02
+        rev.A - 2019/10/03
     </div>
 
     <div class="heading">
@@ -331,8 +331,8 @@
                     </tr>
                     <tr>
                         <td>YMZ280B</td>
-                        <td>OFF</td>
                         <td>ON</td>
+                        <td>OFF</td>
                         <td>PIN16 (BCO)</td>
                         <td>PIN17 (DO)</td>
                         <td>PIN14 (LRO)</td>
@@ -354,6 +354,14 @@
                         <td>PIN43 (LRCK)</td>
                     </tr>
                     <tr>
+                        <td>CXD2925Q</td>
+                        <td>OFF</td>
+                        <td>ON</td>
+                        <td>PIN97 (BCKO)</td>
+                        <td>PIN99 (DATO)</td>
+                        <td>PIN98 (LRCO)</td>
+                    </tr>
+                    <tr>
                         <td>CXD2938Q</td>
                         <td>OFF</td>
                         <td>ON</td>
@@ -368,6 +376,14 @@
                         <td>PIN1 (BCK)</td>
                         <td>PIN3 (DATA)</td>
                         <td>PIN2 (WS)</td>
+                    </tr>
+                    <tr>
+                        <td>TAITO FX-1<br />(uPD6379)</td>
+                        <td>OFF</td>
+                        <td>ON</td>
+                        <td>PIN3 (CLK)</td>
+                        <td>PIN2 (SI)</td>
+                        <td>PIN1 (LRCK)</td>
                     </tr>
                     <tr>
                         <td>MSM6258V</td>
@@ -387,8 +403,8 @@
                     </tr>
                 </table>
             </li>
-            <li>C140はSYSTEM-IIボード時の設定です。SYSTEM21では異なる場合があります。</li>
-            <li>TAITO F3ボード(ES5505)に接続する場合はTDA1543のI2S信号に接続します。</li>
+            <!--<li>C140はSYSTEM-IIボード時の設定です。SYSTEM21では異なる場合があります。</li>-->
+            <li>TAITO F3/FX-1ボードに接続する場合はDACの信号に接続します。</li>
             <li>MSM6258Vの入力モードではモノラルになります。</li>
             <li>YMF276,YMF288,YMF297についてはCH2に接続することもできます。</li>
             <li>音源ICからMDC-1までは極力短い配線で接続してください。</li>
