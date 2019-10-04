@@ -91,7 +91,7 @@
     <h1 id="top">'MDC-1' - FM/PCM音源マルチデータコンバーター</h1>
     <div align=right>
         <!--<a href="mdc1.html">English</a> / 日本語<br />-->
-        rev.A - 2019/10/03
+        rev.A - 2019/10/05
     </div>
 
     <div class="heading">
@@ -138,8 +138,82 @@
             <li><strong>電源・信号入力コネクタ</strong><br /> ボードへの電源および音源ICからのディジタルデータを入力するコネクタです。<br /> +5V inを対象基板の5Vへ、GNDを対象基板のGNDまたは音源ICのVssへ接続します。それ以外の端子の接続については次項を参照してください。
                 <br /> 適合ハウジング：JST XHP-9<br />
             </li>
-            <li><strong>CH1/CH2入力モード選択</strong><br /> CH1およびCH2の入力モードを選択するスイッチです。設定詳細については次項を参照してください。
+            <li><strong>CH1/CH2入力モード選択</strong><br /> CH1およびCH2の入力モードを選択するスイッチです。各音源ICでの設定詳細については次項を参照してください。
                 <br />
+                <table>
+                    <tr>
+                        <th>DIPSW1</th>
+                        <th>DIPSW2</th>
+                        <th>DIPSW3</th>
+                        <th>DIPSW4</th>
+                        <th>CH1入力モード</th>
+                        <th>CH2入力モード</th>
+                    </tr>
+                    <tr>
+                        <td>ON</td>
+                        <td>ON</td>
+                        <td>X</td>
+                        <td>X</td>
+                        <td>YM3012</td>
+                        <td>--</td>
+                    </tr>
+                    <tr>
+                        <td>OFF</td>
+                        <td>ON</td>
+                        <td>X</td>
+                        <td>X</td>
+                        <td>YM3016/YAC512</td>
+                        <td>--</td>
+                    </tr>
+                    <tr>
+                        <td>ON</td>
+                        <td>OFF</td>
+                        <td>X</td>
+                        <td>X</td>
+                        <td>16bit-RJ</td>
+                        <td>--</td>
+                    </tr>
+                    <tr>
+                        <td>OFF</td>
+                        <td>OFF</td>
+                        <td>X</td>
+                        <td>X</td>
+                        <td>YM3014(モノラル)</td>
+                        <td>--</td>
+                    </tr>
+                    <tr>
+                        <td>X</td>
+                        <td>X</td>
+                        <td>ON</td>
+                        <td>ON</td>
+                        <td>--</td>
+                        <td>I2S</td>
+                    </tr>
+                    <tr>
+                        <td>X</td>
+                        <td>X</td>
+                        <td>OFF</td>
+                        <td>ON</td>
+                        <td>--</td>
+                        <td>16bit-RJ</td>
+                    </tr>
+                    <tr>
+                        <td>X</td>
+                        <td>X</td>
+                        <td>ON</td>
+                        <td>OFF</td>
+                        <td>--</td>
+                        <td>C140/YAC513/YAC516</td>
+                    </tr>
+                    <tr>
+                        <td>X</td>
+                        <td>X</td>
+                        <td>OFF</td>
+                        <td>OFF</td>
+                        <td>--</td>
+                        <td>MSM6258(モノラル)</td>
+                    </tr>
+                </table><br />
             </li>
             <li><strong>ミキシングVR</strong><br /> CH1とCH2のバランスを調整するボリュームです。CWでCH2、CCWでCH1の音量が上がります。
                 <br />
@@ -280,8 +354,8 @@
                     </tr>
                     <tr>
                         <td>CH1未使用時</td>
-                        <td>X</td>
-                        <td>X</td>
+                        <td>ON</td>
+                        <td>ON</td>
                         <td>n.c</td>
                         <td>n.c</td>
                         <td>n.c</td>
@@ -328,6 +402,22 @@
                         <td>PIN88 (BCK)</td>
                         <td>PIN91 (DAT0)</td>
                         <td>PIN89 (LRCK)</td>
+                    </tr>
+                    <tr>
+                        <td>YMF271-F</td>
+                        <td>ON</td>
+                        <td>OFF</td>
+                        <td>PIN31 (BCO)</td>
+                        <td>PIN?? (DO1)</td>
+                        <td>PIN?? (LRO)</td>
+                    </tr>
+                    <tr>
+                        <td>YMF278B</td>
+                        <td>ON</td>
+                        <td>OFF</td>
+                        <td>PIN20 (BCO)</td>
+                        <td>PIN24 (DO2)</td>
+                        <td>PIN21 (LRO)</td>
                     </tr>
                     <tr>
                         <td>YMZ280B</td>
@@ -378,7 +468,7 @@
                         <td>PIN2 (WS)</td>
                     </tr>
                     <tr>
-                        <td>TAITO FX-1<br />(uPD6379)</td>
+                        <td>TAITO FX-1B<br />(uPD6379)</td>
                         <td>OFF</td>
                         <td>ON</td>
                         <td>PIN3 (CLK)</td>
@@ -395,15 +485,14 @@
                     </tr>
                     <tr>
                         <td>CH2未使用時</td>
-                        <td>X</td>
-                        <td>X</td>
+                        <td>ON</td>
+                        <td>ON</td>
                         <td>n.c</td>
                         <td>n.c</td>
                         <td>n.c</td>
                     </tr>
                 </table>
             </li>
-            <!--<li>C140はSYSTEM-IIボード時の設定です。SYSTEM21では異なる場合があります。</li>-->
             <li>TAITO F3/FX-1ボードに接続する場合はDACの信号に接続します。</li>
             <li>MSM6258Vの入力モードではモノラルになります。</li>
             <li>YMF276,YMF288,YMF297についてはCH2に接続することもできます。</li>
