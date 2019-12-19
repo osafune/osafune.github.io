@@ -91,7 +91,7 @@
     <h1 id="top">'MDC-1' - FM/PCM音源マルチデータコンバーター</h1>
     <div align=right>
         <!--<a href="mdc1.html">English</a> / 日本語<br />-->
-        rev.A - 2019/12/18
+        rev.A - 2019/12/20
     </div>
 
     <div class="heading">
@@ -136,9 +136,11 @@
     <p>
         <ul>
             <li><strong>電源・信号入力コネクタ</strong><br /> ボードへの電源および音源ICからのディジタルデータを入力するコネクタです。<br /> +5V inを対象基板の5Vへ、GNDを対象基板のGNDまたは音源ICのVssへ接続します。それ以外の端子の接続については次項を参照してください。
-                <br /> 適合ハウジング：JST XHP-9<br />
+                <ul>
+                    <li>適合ハウジング：JST XHP-9</li>
+                </ul>
             </li>
-            <li><strong>CH1/CH2入力モード選択</strong><br /> CH1およびCH2の入力モードを選択するスイッチです。各音源ICでの設定詳細については次項を参照してください。
+            <li><strong>CH1/CH2入力モード選択</strong><br /> CH1およびCH2の入力モードを選択するスイッチです。CH2をMSM6258Vモードで使う場合はCH1はYM3012モードに設定してください。<br /> なお、各音源ICでの設定詳細については次項を参照してください。
                 <br />
                 <table>
                     <tr>
@@ -206,19 +208,19 @@
                         <td>C140</td>
                     </tr>
                     <tr>
-                        <td>X</td>
-                        <td>X</td>
+                        <td>ON</td>
+                        <td>ON</td>
                         <td>OFF</td>
                         <td>OFF</td>
-                        <td>--</td>
-                        <td>MSM6258(モノラル)</td>
+                        <td>YM3012</td>
+                        <td>MSM6258V(モノラル)</td>
                     </tr>
                 </table><br />
             </li>
             <li><strong>ミキシングVR</strong><br /> CH1とCH2のバランスを調整するボリュームです。CWでCH2、CCWでCH1の音量が上がります。
                 <br />
             </li>
-            <li><strong>S/PDIF光出力</strong><br /> ミキシングされたディジタル音声データが出力される角形光コネクタです。音源ICの音声は全て48kHz/16bitへ変換されて出力されます。
+            <li><strong>S/PDIF光出力</strong><br /> ミキシングされたディジタル音声データが出力される角形光コネクタです。音源ICの音声は全て48kHz/20bitへ変換されて出力されます。
                 <br />
             </li>
             <li><strong>モニター用LINE出力</strong><br /> モニター用にLINEレベルのステレオ音声が出力されるφ3.5ステレオミニジャックです。モニター用途に限定しているため、高音質ではありません。
@@ -380,10 +382,12 @@
                         <td>n.c</td>
                     </tr>
                 </table>
+                <ul>
+                    <li>YM2203,YM3526,YM3812の入力モードではモノラルになります。</li>
+                    <li>音源ICからMDC-1までは極力短い配線で接続してください。</li>
+                    <li>この表以外にも16bit-RJフォーマットで出力する音源ICを接続することができます。</li>
+                </ul>
             </li>
-            <li>YM2203,YM3526,YM3812の入力モードではモノラルになります。</li>
-            <li>音源ICからMDC-1までは極力短い配線で接続してください。</li>
-            <li>この表以外にも16bit-RJフォーマットで出力する音源ICを接続することができます。</li>
         </ul>
         <br />
         <ul>
@@ -469,14 +473,6 @@
                         <td>PIN3 (DATA)</td>
                         <td>PIN2 (WS)</td>
                     </tr>
-                    <!--<tr>
-                        <td>TAITO FX-1B<br />(uPD6379)</td>
-                        <td>OFF</td>
-                        <td>ON</td>
-                        <td>PIN3 (CLK)</td>
-                        <td>PIN2 (SI)</td>
-                        <td>PIN1 (LRCK)</td>
-                    </tr>-->
                     <tr>
                         <td>SYSTEM SSV<br />(uPD6376)</td>
                         <td>OFF</td>
@@ -502,12 +498,149 @@
                         <td>n.c</td>
                     </tr>
                 </table>
+                <ul>
+                    <li>TAITO F3/FX-1BおよびSSVボードに接続する場合はDACの信号に接続します。</li>
+                    <li>MSM6258Vの入力モードではモノラルになります。</li>
+                    <li>YMF271,YMF278,YMF276,YMF288,YMF297についてはCH2に接続することもできます。</li>
+                    <li>音源ICからMDC-1までは極力短い配線で接続してください。</li>
+                    <li>この表以外にも16bit-RJフォーマットまたはI2Sフォーマットで出力する音源ICを接続することができます。</li>
+                </ul>
             </li>
-            <li>TAITO F3/FX-1BおよびSSVボードに接続する場合はDACの信号に接続します。</li>
-            <li>MSM6258Vの入力モードではモノラルになります。</li>
-            <li>YMF271,YMF278,YMF276,YMF288,YMF297についてはCH2に接続することもできます。</li>
-            <li>音源ICからMDC-1までは極力短い配線で接続してください。</li>
-            <li>この表以外にも16bit-RJフォーマットまたはI2Sフォーマットで出力する音源ICを接続することができます。</li>
+        </ul>
+        <br />
+        <ul>
+            <li><strong>PCM音源を2チャネル使用するボードの接続例</strong>
+                <ul>
+                    <li>SYSTEM22 / SYSTEM22.5 / SYSTEM Super 22 / SYSTEM23 / SYSTEM Super 23<br /> 音源IC : C352
+                        <table>
+                            <tr>
+                                <th>DIPSW</th>
+                                <th>設定</th>
+                                <th>入力モード</th>
+                            </tr>
+                            <tr>
+                                <td>DIPSW1</td>
+                                <td>ON</td>
+                                <td rowspan="2">16bit-RJ</td>
+                            </tr>
+                            <tr>
+                                <td>DIPSW2</td>
+                                <td>OFF</td>
+                            </tr>
+                            <tr>
+                                <td>DIPSW3</td>
+                                <td>OFF</td>
+                                <td rowspan="2">16bit-RJ</td>
+                            </tr>
+                            <tr>
+                                <td>DIPSW4</td>
+                                <td>ON</td>
+                            </tr>
+                        </table>
+                        <table>
+                            <tr>
+                                <th>信号名</th>
+                                <th colspan="2">接続先</th>
+                            </tr>
+                            <tr>
+                                <td>CH1-DCK</td>
+                                <td>PIN88 (BCK)</td>
+                                <td rowspan="3">C352 (フロントチャネル)<br />BCKとLRCKはCH1,CH2両方に接続する</td>
+                            </tr>
+                            <tr>
+                                <td>CH1-SD</td>
+                                <td>PIN91 (DAT0)</td>
+                            </tr>
+                            <tr>
+                                <td>CH1-SH1</td>
+                                <td>PIN89 (LRCK)</td>
+                            </tr>
+                            <tr>
+                                <td>CH1-SH2</td>
+                                <td>n.c</td>
+                                <td>
+                            </tr>
+                            <tr>
+                                <td>CH2-BCLK</td>
+                                <td>PIN88 (BCK)</td>
+                                <td rowspan="3">C352 (リアチャネル)<br />BCKとLRCKはCH1,CH2両方に接続する</td>
+                            </tr>
+                            <tr>
+                                <td>CH2-SDAT</td>
+                                <td>PIN92 (DAT1)</td>
+                            </tr>
+                            <tr>
+                                <td>CH2-LRCK</td>
+                                <td>PIN89 (LRCK)</td>
+                            </tr>
+                        </table>
+                    </li>
+                    <br />
+                    <li>TAITO FX-1B / G-NET<br />音源IC : ZOOM ZSG-2 (BGM), CXD2925Q (効果音)
+                        <table>
+                            <tr>
+                                <th>DIPSW</th>
+                                <th>設定</th>
+                                <th>入力モード</th>
+                            </tr>
+                            <tr>
+                                <td>DIPSW1</td>
+                                <td>ON</td>
+                                <td rowspan="2">16bit-RJ</td>
+                            </tr>
+                            <tr>
+                                <td>DIPSW2</td>
+                                <td>OFF</td>
+                            </tr>
+                            <tr>
+                                <td>DIPSW3</td>
+                                <td>OFF</td>
+                                <td rowspan="2">16bit-RJ</td>
+                            </tr>
+                            <tr>
+                                <td>DIPSW4</td>
+                                <td>ON</td>
+                            </tr>
+                        </table>
+                        <table>
+                            <tr>
+                                <th>信号名</th>
+                                <th colspan="2">接続先</th>
+                            </tr>
+                            <tr>
+                                <td>CH1-DLK</td>
+                                <td>PIN3 (CLK)</td>
+                                <td rowspan="3">uPD6379 (ドーターボード側)</td>
+                            </tr>
+                            <tr>
+                                <td>CH1-SD</td>
+                                <td>PIN2 (SI)</td>
+                            </tr>
+                            <tr>
+                                <td>CH1-SH1</td>
+                                <td>PIN1 (LRCK)</td>
+                            </tr>
+                            <tr>
+                                <td>CH1-SH2</td>
+                                <td>n.c</td>
+                            </tr>
+                            <tr>
+                                <td>CH2-BCLK</td>
+                                <td>PIN97 (BCKO)</td>
+                                <td rowspan="3">CXD2925Q (ZN-1ボード側)</td>
+                            </tr>
+                            <tr>
+                                <td>CH2-SDAT</td>
+                                <td>PIN99 (DATO)</td>
+                            </tr>
+                            <tr>
+                                <td>CH2-LRCK</td>
+                                <td>PIN98 (LRCO)</td>
+                            </tr>
+                        </table>
+                    </li>
+                </ul>
+            </li>
         </ul>
     </p>
     <br />
