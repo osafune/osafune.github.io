@@ -5,10 +5,10 @@ Webサイト公開用リポジトリ
 
 URLショートカット 
 -----------------
-[PERIDOT Web](http://osafune.github.io/peridot.html)  
-[RBFファイル変換](http://osafune.github.io/rbf_base64encode.html)  
-[RPDファイル変換](http://osafune.github.io/rpd_bitreverse.html)  
-[CERASITE マニュアル](http://osafune.github.io/cerasite.html)  
-[EFM8UB1 Breakout マニュアル](http://osafune.github.io/efm8ub1_breakout.html)  
-[MDC-1 マニュアル](http://osafune.github.io/mdc1_docs_jp.html)  
+[PERIDOT Web](https://osafune.github.io/peridot.html)  
+[RBFファイル変換](https://osafune.github.io/rbf_base64encode.html)  
+[RPDファイル変換](https://osafune.github.io/rpd_bitreverse.html)  
+[CERASITE マニュアル](https://osafune.github.io/cerasite.html)  
+[EFM8UB1 Breakout マニュアル](https://osafune.github.io/efm8ub1_breakout.html)  
+[MDC-1 マニュアル](https://osafune.github.io/mdc1_docs_jp.html)  
 
