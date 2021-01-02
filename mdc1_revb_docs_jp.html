@@ -131,6 +131,19 @@
     <br />
 
     <div class="heading">
+        <h2 id="cautions">内容物</h2>
+    </div>
+    <p>
+        <ul>
+            <li>MDC-1ボード ‥‥ 1枚</li>
+            <li>JST XHP-9ハウジング ‥‥ 1個</li>
+            <li>XHコンタクト ‥‥ 10個</li>
+            <li>JST PH-2アセンブリケーブル ‥‥ 1本</li>
+        </ul>
+    </p>
+    <br />
+
+    <div class="heading">
         <h2 id="boardconnector">ボードコネクタ配置図</h2>
     </div>
     <img src="images/mdc1/mdc1_revb_conn.png" alt="MDC-1 Connector diagram" />
@@ -193,7 +206,7 @@
                     </tr>
                 </table><br />
             </li>
-            <li><strong>L/R-PAN信号入力コネクタ</strong><br /> X68000用のL/R-PAN信号を入力するコネクタです。<br /> ADPCMのLおよびRミュート信号（ミュートトランジスタのベース信号）を接続します。このコネクタを使用する場合は、信号入力コネクタのGNDをX68000オーディオボードのGNDに接続してください。<br /> X68000モード以外では未接続にしてください。
+            <li><strong>L/R-PAN信号入力コネクタ</strong><br /> X68000/X68030のADPCM左右ミュート信号を入力するコネクタです。<br /> ADPCMのLchおよびRchミュート信号（ミュートトランジスタのベース信号）を接続します。このコネクタを使用する場合は、信号入力コネクタのGNDをX68000オーディオボードのGNDに接続してください。<br /> X68000モード以外では未接続にしてください。
                 <ul>
                     <li>適合ハウジング：JST PH-2</li>
                 </ul>
@@ -215,7 +228,7 @@
                     </tr>
                 </table><br />
             </li>
-            <li><strong>CH1/CH2入力モード選択</strong><br /> CH1およびCH2の入力モードを選択するスイッチです。X68000モード(MSM6258V入力)で使う場合は必ずSW1/SW2をOFFに設定してください。<br /> なお、各音源ICでの設定詳細については次項を参照してください。
+            <li><strong>CH1/CH2入力モード選択</strong><br /> CH1およびCH2の入力モードを選択するスイッチです。X68000モードで使う場合は必ずDIPSW1/DIPSW2をOFFに設定してください。<br /> なお、各音源ICでの設定詳細については次項を参照してください。
                 <br />
                 <table>
                     <tr>
@@ -303,7 +316,7 @@
                         <td>OFF</td>
                         <td>OFF</td>
                         <td>OFF</td>
-                        <td>X68000(YM3012)</td>
+                        <td>X68000(YM2151)</td>
                         <td>X68000(MSM6258V)</td>
                     </tr>
                 </table><br />
@@ -637,8 +650,12 @@
                     </tr>
                     <tr>
                         <td>CH2未使用時</td>
-                        <td>X</td>
-                        <td>X</td>
+                        <td>
+                            <font color="green"><b>ON</b></font>
+                        </td>
+                        <td>
+                            <font color="green"><b>ON</b></font>
+                        </td>
                         <td>n.c</td>
                         <td>n.c</td>
                         <td>n.c</td>
@@ -646,7 +663,7 @@
                 </table>
                 <ul>
                     <li>TAITO F3/FX-1BおよびSSVボードに接続する場合はDACの信号に接続します。</li>
-                    <li>X68000(MSM6258V)モードではL/R-PAN入力コネクタの信号が有効になり、CH1はYM3012モードで固定になります。</li>
+                    <li>X68000モードではL/R-PAN信号入力コネクタの信号が有効になり、CH1はYM3012モードで固定になります。</li>
                     <li>YMF271,YMF278,YMF276,YMF288,YMF297についてはCH2に接続することもできます。</li>
                     <li>音源ICからMDC-1までは極力短い配線で接続してください。</li>
                     <li>この表以外にも16bit-RJフォーマットまたはI2Sフォーマットで出力する音源ICを接続することができます。</li>
