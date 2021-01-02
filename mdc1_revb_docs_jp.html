@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="ja" xml:lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <title>'MDC-1' - FM/PCM Digital Signal Converter</title>
+
+    <style type="text/css">
+        body {
+            width: 750px;
+            margin: 15px;
+            padding: 0;
+            font-family: 'Segoe UI', Arial, Meiryo, 'MS PGothic', sans-serif;
+            font-size: 11pt;
+            line-height: 1.4;
+            color: #303830;
+        }
+        
+        h1 {
+            font-size: 200%;
+            color: #006b6b;
+            text-shadow: 5px 5px 10px #d0d0d0;
+        }
+        
+        img {
+            border: none;
+        }
+        
+        p {
+            padding: 3px 10px 3px 15px;
+        }
+        
+        li {
+            margin: 0.5em 0 0 0;
+        }
+        
+        div.heading {
+            width: 100%;
+            /* 見出しエリアの幅 */
+            margin-bottom: 1em;
+            padding: 4px 0px;
+            /* 見出しエリアのパディング（上下、左右） */
+            border-bottom: 1px #4c4c4c solid;
+            /* 見出しエリアの下境界線 */
+        }
+        
+        div.heading h2 {
+            /* 見出し文字の設定 */
+            margin: 0;
+            padding: 3px 3px 0px 5px;
+            /* 見出しのパディング（上右下左） */
+            border-left: 10px #a4c639 solid;
+            /* 見出しの左境界線 */
+            font-size: 150%;
+            /* 見出しの文字サイズ */
+            color: #006b6b;
+            line-height: 100%;
+        }
+        
+        table {
+            border-collapse: collapse;
+            margin: 0 auto;
+        }
+        
+        th {
+            color: #005ab3;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #eee
+        }
+        
+        td {
+            border-bottom: 1px dashed #999;
+        }
+        
+        th,
+        tr:last-child td {
+            border-bottom: 2px solid #005ab3;
+        }
+        
+        td,
+        th {
+            padding: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1 id="top">'MDC-1' - FM/PCM音源マルチデータコンバーター</h1>
+    <div align=right>
+        <!--<a href="mdc1.html">English</a> / 日本語<br />-->
+        rev.B - 2021/01/03<br /> <a href="mdc1_docs_jp.html">rev.Aの説明はこちら</a>
+    </div>
+
+    <div class="heading">
+        <h2 id="overview">Overview</h2>
+    </div>
+    <img src="images/mdc1/mdc1_revb_thumb.jpg" alt="MDC-1" />
+    <p>
+        MDC-1は各種のFM音源ICおよびPCM音源ICのディジタルデータを48k S/PDIF光出力にミキシングします。 2つの入力チャネルを持っており、それぞれ個別の音源ICのディジタルデータを受信することができます。<br /> アナログ信号を介さずにディジタルデータをそのままS/PDIFに変換するため、レトロPCやゲーム基板の音源を簡単に高音質化できます。
+        <br />
+        <ul>
+            <li>音源ICのディジタル信号を48kHz/24bitのS/PDIF光信号に変換して出力。</li>
+            <li>FM音源ICはYM2151をはじめ、主要なチップのDACインターフェースをカバー。</li>
+            <li>PCM音源ICは16bit右詰めフォーマットまたはI2Sに対応。</li>
+            <li>2つの入力チャネルのミキシング出力が可能。</li>
+            <li>15kHz～62.5kHzの幅広いサンプリングレートに対応。</li>
+            <li>X68000/X68030のADPCM左右PANに対応。</li>
+            <li>コンパクトな基板サイズ（38mm×70mm）で機器組み込みが容易。</li>
+        </ul>
+    </p>
+    <br />
+
+    <div class="heading">
+        <h2 id="cautions">注意事項</h2>
+    </div>
+    <p>
+        MDC-1について下記事項を了承の上で使用してください。
+    </p>
+    <p>
+        <ul>
+            <li>MDC-1は対象基板への取り付けを目的とした部品です。対象基板の改造については自己責任で行って下さい。</li>
+            <li>MDC-1のボード上には破損しやすい部品が実装されています。たわみや衝撃が加わると故障する場合があります。設置場所に注意してください。</li>
+            <li>MDC-1の対応音源ICはテスト環境下での確認です。全てのPC・ゲーム基板等での動作を保証するものではありません。</li>
+            <li>元音源は著作権で保護されている場合があります。私的録音録画以外で利用する際には権利元へお問い合わせください。</li>
+            <li>MDC-1を使用したことで発生する一切の問題・損害について、S.OSAFUNEおよびJ-7SYSTEM WORKS LIMITEDはその責を負いません。</li>
+        </ul>
+    </p>
+    <br />
+
+    <div class="heading">
+        <h2 id="boardconnector">ボードコネクタ配置図</h2>
+    </div>
+    <img src="images/mdc1/mdc1_revb_conn.png" alt="MDC-1 Connector diagram" />
+    <p>
+        <ul>
+            <li><strong>電源・信号入力コネクタ</strong><br /> ボードへの電源および音源ICからのディジタルデータを入力するコネクタです。<br /> +5V inを対象基板の5Vへ、GNDを対象基板のGNDまたは音源ICのVssへ接続します。それ以外の端子の接続については次項を参照してください。
+                <ul>
+                    <li>適合ハウジング：JST XHP-9</li>
+                </ul>
+                <table>
+                    <tr>
+                        <th>ピン</th>
+                        <th>信号名</th>
+                        <th>内　容</th>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>+5V in</td>
+                        <td>ボード電源。ターゲット基板または外部電源から5Vを入力</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>CH1-DCK</td>
+                        <td>CH1のクロック入力</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>CH1-SD</td>
+                        <td>CH1のシリアルデータ入力</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>CH1-SH1</td>
+                        <td>CH1のホールド1入力またはL/R信号(LRCK)入力</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>CH1-SH2</td>
+                        <td>CH1のホールド2入力</td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td>CH2-BCLK</td>
+                        <td>CH2のクロック入力</td>
+                    </tr>
+                    <tr>
+                        <td>7</td>
+                        <td>CH2-SDAT</td>
+                        <td>CH2のシリアルデータ入力</td>
+                    </tr>
+                    <tr>
+                        <td>8</td>
+                        <td>CH2-LRCK</td>
+                        <td>CH2のL/R信号入力またはサンプリング周波数(VCK)信号</td>
+                    </tr>
+                    <tr>
+                        <td>9</td>
+                        <td>GND</td>
+                        <td>ボード電源。ターゲット基板のGNDに接続</td>
+                    </tr>
+                </table><br />
+            </li>
+            <li><strong>L/R-PAN信号入力コネクタ</strong><br /> X68000用のL/R-PAN信号を入力するコネクタです。<br /> ADPCMのLおよびRミュート信号（ミュートトランジスタのベース信号）を接続します。このコネクタを使用する場合は、信号入力コネクタのGNDをX68000オーディオボードのGNDに接続してください。<br /> X68000モード以外では未接続にしてください。
+                <ul>
+                    <li>適合ハウジング：JST PH-2</li>
+                </ul>
+                <table>
+                    <tr>
+                        <th>ピン</th>
+                        <th>信号名</th>
+                        <th>内　容</th>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>PAN-R</td>
+                        <td>X68000 ADPCMのミュートR信号入力</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>PAN-L</td>
+                        <td>X68000 ADPCMのミュートL信号入力</td>
+                    </tr>
+                </table><br />
+            </li>
+            <li><strong>CH1/CH2入力モード選択</strong><br /> CH1およびCH2の入力モードを選択するスイッチです。X68000モード(MSM6258V入力)で使う場合は必ずSW1/SW2をOFFに設定してください。<br /> なお、各音源ICでの設定詳細については次項を参照してください。
+                <br />
+                <table>
+                    <tr>
+                        <th>DIPSW1</th>
+                        <th>DIPSW2</th>
+                        <th>DIPSW3</th>
+                        <th>DIPSW4</th>
+                        <th>CH1入力モード</th>
+                        <th>CH2入力モード</th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <font color="green"><b>ON</b></font>
+                        </td>
+                        <td>
+                            <font color="green"><b>ON</b></font>
+                        </td>
+                        <td>--</td>
+                        <td>--</td>
+                        <td>YM3014(モノラル)</td>
+                        <td>--</td>
+                    </tr>
+                    <tr>
+                        <td>OFF</td>
+                        <td>
+                            <font color="green"><b>ON</b></font>
+                        </td>
+                        <td>--</td>
+                        <td>--</td>
+                        <td>YAC513/YAC516/16bit-RJ</td>
+                        <td>--</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <font color="green"><b>ON</b></font>
+                        </td>
+                        <td>OFF</td>
+                        <td>--</td>
+                        <td>--</td>
+                        <td>YM3016/YAC512</td>
+                        <td>--</td>
+                    </tr>
+                    <tr>
+                        <td>OFF</td>
+                        <td>OFF</td>
+                        <td>--</td>
+                        <td>--</td>
+                        <td>YM3012</td>
+                        <td>--</td>
+                    </tr>
+                    <tr>
+                        <td>--</td>
+                        <td>--</td>
+                        <td>
+                            <font color="green"><b>ON</b></font>
+                        </td>
+                        <td>
+                            <font color="green"><b>ON</b></font>
+                        </td>
+                        <td>--</td>
+                        <td>I2S</td>
+                    </tr>
+                    <tr>
+                        <td>--</td>
+                        <td>--</td>
+                        <td>OFF</td>
+                        <td>
+                            <font color="green"><b>ON</b></font>
+                        </td>
+                        <td>--</td>
+                        <td>16bit-RJ</td>
+                    </tr>
+                    <tr>
+                        <td>--</td>
+                        <td>--</td>
+                        <td>
+                            <font color="green"><b>ON</b></font>
+                        </td>
+                        <td>OFF</td>
+                        <td>--</td>
+                        <td>C140</td>
+                    </tr>
+                    <tr>
+                        <td>OFF</td>
+                        <td>OFF</td>
+                        <td>OFF</td>
+                        <td>OFF</td>
+                        <td>X68000(YM3012)</td>
+                        <td>X68000(MSM6258V)</td>
+                    </tr>
+                </table><br />
+            </li>
+            <li><strong>ミキシングVR</strong><br /> CH1とCH2のバランスを調整するボリュームです。CWでCH2、CCWでCH1の音量が上がります。
+                <br />
+            </li>
+            <li><strong>S/PDIF光出力</strong><br /> ミキシングされたディジタル音声データが出力される角形光コネクタです。音源ICの音声は全て48kHz/24bitへ変換されて出力されます。
+                <br />
+            </li>
+            <li><strong>モニター用LINE出力</strong><br /> モニター用にLINEレベルのステレオ音声が出力されるφ3.5ステレオミニジャックです。
+                <br />
+            </li>
+        </ul>
+    </p>
+    <br />
+
+    <div class="heading">
+        <h2 id="modesettings">モード設定と接続</h2>
+    </div>
+    <p>
+        <ul>
+            <li><strong>CH1:FM音源ICの接続表</strong>
+                <table>
+                    <tr>
+                        <th>音源IC</th>
+                        <th>DIPSW1</th>
+                        <th>DIPSW2</th>
+                        <th>CH1-DCK</th>
+                        <th>CH1-SD</th>
+                        <th>CH1-SH1</th>
+                        <th>CH1-SH2</th>
+                    </tr>
+                    <tr>
+                        <td>YM2151</td>
+                        <td>OFF</td>
+                        <td>OFF</td>
+                        <td>PIN23 (φ1)</td>
+                        <td>PIN21 (SO)</td>
+                        <td>PIN20 (SH1)</td>
+                        <td>PIN19 (SH2)</td>
+                    </tr>
+                    <tr>
+                        <td>YM2608</td>
+                        <td>
+                            <font color="green"><b>ON</b></font>
+                        </td>
+                        <td>OFF</td>
+                        <td>PIN64 (φS)</td>
+                        <td>PIN31 (DPO)</td>
+                        <td>PIN29 (SH1)</td>
+                        <td>PIN30 (SH2)</td>
+                    </tr>
+                    <tr>
+                        <td>YM2610</td>
+                        <td>
+                            <font color="green"><b>ON</b></font>
+                        </td>
+                        <td>OFF</td>
+                        <td>PIN64 (φS)</td>
+                        <td>PIN31 (DPO)</td>
+                        <td>PIN29 (SH1)</td>
+                        <td>PIN30 (SH2)</td>
+                    </tr>
+                    <tr>
+                        <td>YMF262-M</td>
+                        <td>
+                            <font color="green"><b>ON</b></font>
+                        </td>
+                        <td>OFF</td>
+                        <td>PIN23 (φS)</td>
+                        <td>PIN21 (DOAB)</td>
+                        <td>PIN20 (SMPAC)</td>
+                        <td>PIN19 (SMPBD)</td>
+                    </tr>
+                    <tr>
+                        <td>YMF262-S</td>
+                        <td>
+                            <font color="green"><b>ON</b></font>
+                        </td>
+                        <td>OFF</td>
+                        <td>PIN39 (φS)</td>
+                        <td>PIN36 (DOAB)</td>
+                        <td>PIN35 (SMPAC)</td>
+                        <td>PIN33 (SMPBD)</td>
+                    </tr>
+                    <tr>
+                        <td>YMF271-F</td>
+                        <td>OFF</td>
+                        <td>
+                            <font color="green"><b>ON</b></font>
+                        </td>
+                        <td>PIN31 (BCO)</td>
+                        <td>PIN?? (DO1)</td>
+                        <td>PIN?? (LRO)</td>
+                        <td>n.c</td>
+                    </tr>
+                    <tr>
+                        <td>YMF278B</td>
+                        <td>OFF</td>
+                        <td>
+                            <font color="green"><b>ON</b></font>
+                        </td>
+                        <td>PIN20 (BCO)</td>
+                        <td>PIN24 (DO2)</td>
+                        <td>PIN21 (LRO)</td>
+                        <td>n.c</td>
+                    </tr>
+                    <tr>
+                        <td>YMF276-M</td>
+                        <td>OFF</td>
+                        <td>
+                            <font color="green"><b>ON</b></font>
+                        </td>
+                        <td>PIN19 (BCO)</td>
+                        <td>PIN20 (SDO)</td>
+                        <td>PIN22 (LRO)</td>
+                        <td>n.c</td>
+                    </tr>
+                    <tr>
+                        <td>YMF288-M</td>
+                        <td>OFF</td>
+                        <td>
+                            <font color="green"><b>ON</b></font>
+                        </td>
+                        <td>PIN23 (BCO)</td>
+                        <td>PIN24 (SDO)</td>
+                        <td>PIN26 (LRO)</td>
+                        <td>n.c</td>
+                    </tr>
+                    <tr>
+                        <td>YMF288-S</td>
+                        <td>OFF</td>
+                        <td>
+                            <font color="green"><b>ON</b></font>
+                        </td>
+                        <td>PIN44 (BCO)</td>
+                        <td>PIN46 (SDO)</td>
+                        <td>PIN54 (LRO)</td>
+                        <td>n.c</td>
+                    </tr>
+                    <tr>
+                        <td>YMF297</td>
+                        <td>OFF</td>
+                        <td>
+                            <font color="green"><b>ON</b></font>
+                        </td>
+                        <td>PIN24 (BCO)</td>
+                        <td>PIN25 (SDO)</td>
+                        <td>PIN26 (LRO)</td>
+                        <td>n.c</td>
+                    </tr>
+                    <tr>
+                        <td>YM2203</td>
+                        <td>
+                            <font color="green"><b>ON</b></font>
+                        </td>
+                        <td>
+                            <font color="green"><b>ON</b></font>
+                        </td>
+                        <td>PIN39 (φS)</td>
+                        <td>PIN23 (DPO)</td>
+                        <td>PIN22 (SH)</td>
+                        <td>n.c</td>
+                    </tr>
+                    <tr>
+                        <td>YM3526</td>
+                        <td>
+                            <font color="green"><b>ON</b></font>
+                        </td>
+                        <td>
+                            <font color="green"><b>ON</b></font>
+                        </td>
+                        <td>PIN23 (φSY)</td>
+                        <td>PIN21 (MO)</td>
+                        <td>PIN20 (SH)</td>
+                        <td>n.c</td>
+                    </tr>
+                    <tr>
+                        <td>YM3812</td>
+                        <td>
+                            <font color="green"><b>ON</b></font>
+                        </td>
+                        <td>
+                            <font color="green"><b>ON</b></font>
+                        </td>
+                        <td>PIN23 (φSY)</td>
+                        <td>PIN21 (MO)</td>
+                        <td>PIN20 (SH)</td>
+                        <td>n.c</td>
+                    </tr>
+                    <tr>
+                        <td>CH1未使用時</td>
+                        <td>OFF</td>
+                        <td>OFF</td>
+                        <td>n.c</td>
+                        <td>n.c</td>
+                        <td>n.c</td>
+                        <td>n.c</td>
+                    </tr>
+                </table>
+                <ul>
+                    <li>YM2203,YM3526,YM3812の入力モードではモノラルになります。</li>
+                    <li>音源ICからMDC-1までは極力短い配線で接続してください。</li>
+                    <li>この表以外にも16bit-RJフォーマットで出力する音源ICを接続することができます。</li>
+                    <li>X68000モードに設定した場合はDIPSW1,DIPSW2共に必ずOFFに設定してください。</li>
+                </ul>
+            </li>
+        </ul>
+        <br />
+        <ul>
+            <li><strong>CH2:PCM音源ICの接続表</strong>
+                <table width="90%">
+                    <tr>
+                        <th>音源IC</th>
+                        <th>DIPSW3</th>
+                        <th>DIPSW4</th>
+                        <th>CH2-BCLK</th>
+                        <th>CH2-SDAT</th>
+                        <th>CH2-LRCK</th>
+                    </tr>
+                    <tr>
+                        <td>C140</td>
+                        <td>
+                            <font color="green"><b>ON</b></font>
+                        </td>
+                        <td>OFF</td>
+                        <td>PIN94 (BCK)</td>
+                        <td>PIN97 (DATA)</td>
+                        <td>PIN96 (LRCK)</td>
+                    </tr>
+                    <tr>
+                        <td>C219</td>
+                        <td>OFF</td>
+                        <td>
+                            <font color="green"><b>ON</b></font>
+                        </td>
+                        <td>PIN116 (BCK)</td>
+                        <td>PIN120 (DATA)</td>
+                        <td>PIN115 (LRCK)</td>
+                    </tr>
+                    <tr>
+                        <td>C352</td>
+                        <td>OFF</td>
+                        <td>
+                            <font color="green"><b>ON</b></font>
+                        </td>
+                        <td>PIN88 (BCK)</td>
+                        <td>PIN91 (DAT0)</td>
+                        <td>PIN89 (LRCK)</td>
+                    </tr>
+                    <tr>
+                        <td>YMZ280B</td>
+                        <td>OFF</td>
+                        <td>
+                            <font color="green"><b>ON</b></font>
+                        </td>
+                        <td>PIN16 (BCO)</td>
+                        <td>PIN17 (DO)</td>
+                        <td>PIN14 (LRO)</td>
+                    </tr>
+                    <tr>
+                        <td>YMZ770C</td>
+                        <td>OFF</td>
+                        <td>
+                            <font color="green"><b>ON</b></font>
+                        </td>
+                        <td>PIN31 (BCO)</td>
+                        <td>PIN33 (SDO)</td>
+                        <td>PIN32 (LRO)</td>
+                    </tr>
+                    <tr>
+                        <td>SPC700</td>
+                        <td>OFF</td>
+                        <td>
+                            <font color="green"><b>ON</b></font>
+                        </td>
+                        <td>PIN42 (BCK)</td>
+                        <td>PIN44 (DATA)</td>
+                        <td>PIN43 (LRCK)</td>
+                    </tr>
+                    <tr>
+                        <td>CXD2922 /<br />CXD2925Q</td>
+                        <td>OFF</td>
+                        <td>
+                            <font color="green"><b>ON</b></font>
+                        </td>
+                        <td>PIN97 (BCKO)</td>
+                        <td>PIN99 (DATO)</td>
+                        <td>PIN98 (LRCO)</td>
+                    </tr>
+                    <tr>
+                        <td>CXD2938Q</td>
+                        <td>OFF</td>
+                        <td>
+                            <font color="green"><b>ON</b></font>
+                        </td>
+                        <td>PIN157 (BCKO)</td>
+                        <td>PIN155 (DATO)</td>
+                        <td>PIN156 (LRCO)</td>
+                    </tr>
+                    <tr>
+                        <td>TAITO F3<br />(TDA1543)</td>
+                        <td>
+                            <font color="green"><b>ON</b></font>
+                        </td>
+                        <td>
+                            <font color="green"><b>ON</b></font>
+                        </td>
+                        <td>PIN1 (BCK)</td>
+                        <td>PIN3 (DATA)</td>
+                        <td>PIN2 (WS)</td>
+                    </tr>
+                    <tr>
+                        <td>SYSTEM SSV<br />(uPD6376)</td>
+                        <td>OFF</td>
+                        <td>
+                            <font color="green"><b>ON</b></font>
+                        </td>
+                        <td>PIN16 (CLK)</td>
+                        <td>PIN15 (SI)</td>
+                        <td>PIN13 (LRCK)</td>
+                    </tr>
+                    <tr>
+                        <td>X68000<br />(MSM6258V)</td>
+                        <td>OFF</td>
+                        <td>OFF</td>
+                        <td>PIN19 (SOCK)</td>
+                        <td>PIN18 (DASO)</td>
+                        <td>PIN42 (VCK)</td>
+                    </tr>
+                    <tr>
+                        <td>CH2未使用時</td>
+                        <td>X</td>
+                        <td>X</td>
+                        <td>n.c</td>
+                        <td>n.c</td>
+                        <td>n.c</td>
+                    </tr>
+                </table>
+                <ul>
+                    <li>TAITO F3/FX-1BおよびSSVボードに接続する場合はDACの信号に接続します。</li>
+                    <li>X68000(MSM6258V)モードではL/R-PAN入力コネクタの信号が有効になり、CH1はYM3012モードで固定になります。</li>
+                    <li>YMF271,YMF278,YMF276,YMF288,YMF297についてはCH2に接続することもできます。</li>
+                    <li>音源ICからMDC-1までは極力短い配線で接続してください。</li>
+                    <li>この表以外にも16bit-RJフォーマットまたはI2Sフォーマットで出力する音源ICを接続することができます。</li>
+                </ul>
+            </li>
+        </ul>
+        <br />
+        <ul>
+            <li><strong>PCM音源を2チャネル使用するボードの接続例</strong>
+                <ul>
+                    <li>SYSTEM22 / SYSTEM22.5 / SYSTEM Super 22 / SYSTEM23 / SYSTEM Super 23<br /> 音源IC : C352
+                        <table width="80%">
+                            <tr>
+                                <th>DIPSW</th>
+                                <th>設定</th>
+                                <th>入力モード</th>
+                            </tr>
+                            <tr>
+                                <td>DIPSW1</td>
+                                <td>OFF</td>
+                                <td rowspan="2">16bit-RJ</td>
+                            </tr>
+                            <tr>
+                                <td>DIPSW2</td>
+                                <td>
+                                    <font color="green"><b>ON</b></td>
+                            </tr>
+                            <tr>
+                                <td>DIPSW3</td>
+                                <td>OFF</td>
+                                <td rowspan="2">16bit-RJ</td>
+                            </tr>
+                            <tr>
+                                <td>DIPSW4</td>
+                                <td>
+                                    <font color="green"><b>ON</b></td>
+                            </tr>
+                        </table>
+                        <table width="80%">
+                            <tr>
+                                <th>信号名</th>
+                                <th colspan="2">接続先</th>
+                            </tr>
+                            <tr>
+                                <td>CH1-DCK</td>
+                                <td>PIN88 (BCK)</td>
+                                <td rowspan="3">C352 (フロントチャネル)<br />BCKとLRCKはCH1,CH2両方に接続する</td>
+                            </tr>
+                            <tr>
+                                <td>CH1-SD</td>
+                                <td>PIN91 (DAT0)</td>
+                            </tr>
+                            <tr>
+                                <td>CH1-SH1</td>
+                                <td>PIN89 (LRCK)</td>
+                            </tr>
+                            <tr>
+                                <td>CH1-SH2</td>
+                                <td>n.c</td>
+                                <td>
+                            </tr>
+                            <tr>
+                                <td>CH2-BCLK</td>
+                                <td>PIN88 (BCK)</td>
+                                <td rowspan="3">C352 (リアチャネル)<br />BCKとLRCKはCH1,CH2両方に接続する</td>
+                            </tr>
+                            <tr>
+                                <td>CH2-SDAT</td>
+                                <td>PIN92 (DAT1)</td>
+                            </tr>
+                            <tr>
+                                <td>CH2-LRCK</td>
+                                <td>PIN89 (LRCK)</td>
+                            </tr>
+                        </table>
+                    </li>
+                    <br />
+                    <li>TAITO FX-1B / G-NET<br />音源IC : ZOOM ZSG-2 (BGM), CXD2925Q (効果音)
+                        <table width="80%">
+                            <tr>
+                                <th>DIPSW</th>
+                                <th>設定</th>
+                                <th>入力モード</th>
+                            </tr>
+                            <tr>
+                                <td>DIPSW1</td>
+                                <td>OFF</td>
+                                <td rowspan="2">16bit-RJ</td>
+                            </tr>
+                            <tr>
+                                <td>DIPSW2</td>
+                                <td>
+                                    <font color="green"><b>ON</b></td>
+                            </tr>
+                            <tr>
+                                <td>DIPSW3</td>
+                                <td>OFF</td>
+                                <td rowspan="2">16bit-RJ</td>
+                            </tr>
+                            <tr>
+                                <td>DIPSW4</td>
+                                <td>
+                                    <font color="green"><b>ON</b></td>
+                            </tr>
+                        </table>
+                        <table width="80%">
+                            <tr>
+                                <th>信号名</th>
+                                <th colspan="2">接続先</th>
+                            </tr>
+                            <tr>
+                                <td>CH1-DLK</td>
+                                <td>PIN3 (CLK)</td>
+                                <td rowspan="3">uPD6379 (ドーターボード側)</td>
+                            </tr>
+                            <tr>
+                                <td>CH1-SD</td>
+                                <td>PIN2 (SI)</td>
+                            </tr>
+                            <tr>
+                                <td>CH1-SH1</td>
+                                <td>PIN1 (LRCK)</td>
+                            </tr>
+                            <tr>
+                                <td>CH1-SH2</td>
+                                <td>n.c</td>
+                            </tr>
+                            <tr>
+                                <td>CH2-BCLK</td>
+                                <td>PIN97 (BCKO)</td>
+                                <td rowspan="3">CXD2925Q (ZN-1ボード側)</td>
+                            </tr>
+                            <tr>
+                                <td>CH2-SDAT</td>
+                                <td>PIN99 (DATO)</td>
+                            </tr>
+                            <tr>
+                                <td>CH2-LRCK</td>
+                                <td>PIN98 (LRCO)</td>
+                            </tr>
+                        </table>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <br />
+        <ul>
+            <li><strong>X68000の接続例</strong><br /> 音源IC：YM2151、MSM6258V
+                <table width="75%">
+                    <tr>
+                        <th>DIPSW</th>
+                        <th>設定</th>
+                        <th>入力モード</th>
+                    </tr>
+                    <tr>
+                        <td>DIPSW1</td>
+                        <td>OFF</td>
+                        <td rowspan="2">X68000(L/R-PAN入力)モード</td>
+                    </tr>
+                    <tr>
+                        <td>DIPSW2</td>
+                        <td>OFF</td>
+                    </tr>
+                    <tr>
+                        <td>DIPSW3</td>
+                        <td>OFF</td>
+                        <td rowspan="2">X68000(MSM6258V)モード</td>
+                    </tr>
+                    <tr>
+                        <td>DIPSW4</td>
+                        <td>OFF</td>
+                    </tr>
+                </table>
+                <table width="75%">
+                    <tr>
+                        <th>信号名</th>
+                        <th colspan="2">接続先</th>
+                    </tr>
+                    <tr>
+                        <td>CH1-DLK</td>
+                        <td>PIN23 (φ1)</td>
+                        <td rowspan="4">YM2151 (音源ボード側)</td>
+                    </tr>
+                    <tr>
+                        <td>CH1-SD</td>
+                        <td>PIN21 (SO)</td>
+                    </tr>
+                    <tr>
+                        <td>CH1-SH1</td>
+                        <td>PIN20 (SH1)</td>
+                    </tr>
+                    <tr>
+                        <td>CH1-SH2</td>
+                        <td>PIN19 (SH2)</td>
+                    </tr>
+                    <tr>
+                        <td>CH2-BCLK</td>
+                        <td>PIN19 (SOCK)</td>
+                        <td rowspan="3">MSM6258V (音源ボード側)</td>
+                    </tr>
+                    <tr>
+                        <td>CH2-SDAT</td>
+                        <td>PIN18 (DASO)</td>
+                    </tr>
+                    <tr>
+                        <td>CH2-LRCK</td>
+                        <td>PIN42 (VCK)</td>
+                    </tr>
+                </table>
+                <table width="75%">
+                    <tr>
+                        <th>信号名</th>
+                        <th colspan="2">接続先</th>
+                    </tr>
+                    <tr>
+                        <td>PAN-R</td>
+                        <td>PIN3 (R-MUTE)</td>
+                        <td>Q208 (DTC114ES,Rchミュートトランジスタ)</td>
+                    </tr>
+                    <tr>
+                        <td>PAN-L</td>
+                        <td>PIN3 (L-MUTE)</td>
+                        <td>Q201 (DTC114ES,Lchミュートトランジスタ)</td>
+                    </tr>
+                </table>
+            </li>
+        </ul>
+    </p>
+    <br />
+
+    <div class="heading">
+        <h2 id="buynow">購入先</h2>
+    </div>
+    <p>
+        <iframe frameborder="0" height="240" width="320" src="https://peridotcraft.buyshop.jp/items/38086232/widget/multi/320/240"></iframe>
+    </p>
+    <br />
+
+    <div class="heading">
+        <h2 id="contact">連絡先</h2>
+    </div>
+    <p>
+        Twitter - <a href="https://twitter.com/s_osafune" target=_blank>＠s_osafune</a><br /> GitHub - <a href="https://github.com/osafune" target=_blank>osafune</a><br/>
+    </p>
+
+    <div align=right style="color:#006b6b;"><strong>&copy;2021 J-7SYSTEM WORKS LIMITED.</strong></div>
+</body>
+
+</html>
