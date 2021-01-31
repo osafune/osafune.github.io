@@ -91,7 +91,7 @@
     <h1 id="top">'MDC-1' - FM/PCM音源マルチデータコンバーター</h1>
     <div align=right>
         <!--<a href="mdc1.html">English</a> / 日本語<br />-->
-        rev.B - 2021/01/03<br /> <a href="mdc1_docs_jp.html">rev.Aの説明はこちら</a>
+        rev.B - 2021/01/31<br /> <a href="mdc1_docs_jp.html">rev.Aの説明はこちら</a>
     </div>
 
     <div class="heading">
@@ -206,7 +206,7 @@
                     </tr>
                 </table><br />
             </li>
-            <li><strong>L/R-PAN信号入力コネクタ</strong><br /> X68000/X68030のADPCM左右ミュート信号を入力するコネクタです。<br /> ADPCMのLchおよびRchミュート信号（ミュートトランジスタのベース信号）を接続します。このコネクタを使用する場合は、信号入力コネクタのGNDをX68000オーディオボードのGNDに接続してください。<br /> X68000モード以外では未接続にしてください。
+            <li><strong>L/R-PAN信号入力コネクタ</strong><br /> X68000/X68030のADPCM左右ミュート信号を入力するコネクタです。<br /> ADPCMのLchおよびRchミュート信号（8255のミュート制御ピンまたはミュートトランジスタのベース信号）を接続します。<br /> このコネクタを使用する場合は、信号入力コネクタのGNDをX68000オーディオボードのGNDに接続してください。X68000モード以外では未接続にしてください。
                 <ul>
                     <li>適合ハウジング：JST PH-2</li>
                 </ul>
@@ -641,7 +641,17 @@
                         <td>PIN13 (LRCK)</td>
                     </tr>
                     <tr>
-                        <td>X68000<br />(MSM6258V)</td>
+                        <td>86音源ボード<br />(YM3433B-D)</td>
+                        <td>OFF</td>
+                        <td>
+                            <font color="green"><b>ON</b></font>
+                        </td>
+                        <td>PIN5 (BCI)</td>
+                        <td>PIN7 (SDI)</td>
+                        <td>PIN6 (SDSY)</td>
+                    </tr>
+                    <tr>
+                        <td>X68000/X68030<br />(MSM6258V)</td>
                         <td>OFF</td>
                         <td>OFF</td>
                         <td>PIN19 (SOCK)</td>
@@ -880,13 +890,12 @@
                     </tr>
                     <tr>
                         <td>PAN-R</td>
-                        <td>PIN3 (R-MUTE)</td>
-                        <td>Q208 (DTC114ES,Rchミュートトランジスタ)</td>
+                        <td>PIN14 (R-MUTE)</td>
+                        <td rowspan="2">8255 (音源ボード側)</td>
                     </tr>
                     <tr>
                         <td>PAN-L</td>
-                        <td>PIN3 (L-MUTE)</td>
-                        <td>Q201 (DTC114ES,Lchミュートトランジスタ)</td>
+                        <td>PIN15 (L-MUTE)</td>
                     </tr>
                 </table>
             </li>
