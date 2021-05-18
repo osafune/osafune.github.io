@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="utf-8">
+    <style type="text/css">
+        body {
+            margin: 10px;
+            padding: 0;
+            font-family: "Helvetica Neue", "Arial", "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Meiryo", sans-serif;
+            color: #202020;
+        }
+        
+        h1 {
+            font-size: 150%;
+            color: #006b6b;
+            text-shadow: 3px 3px 5px #d0d0d0;
+        }
+        
+        h2 {
+            font-size: 120%;
+            color: #006b6b;
+            text-shadow: 3px 3px 5px #d0d0d0;
+        }
+        
+        h3 {
+            font-size: 100%;
+            color: #4c4c4c;
+        }
+        
+        img {
+            border: none;
+        }
+    </style>
+
+    <title>BGX Console</title>
+</head>
+
+<body>
+    <div class="toolheader">
+        <img src="./images/peridotcraft_banner.png" width=162 height=50 align=right />
+        <h1>BGX Console</h1>
+        <br style="clear:both;" />
+    </div>
+
+    <div class="toolbody">
+        <!-- BLE接続 -->
+        <div id="ble_connection" style="border-style: groove;">
+            <button type="button" id="bgx_connect" value="state_noconnection">デバイスを検索して接続</button>
+            <span id="connect_status">接続時間：</span>
+        </div>
+
+        <!-- 送信行と受信テキスト -->
+        <div id="bgx_console" style="border-style: groove;">
+            <b>MODE：</b>
+            <input type="radio" name="bgx_mode" value=1 checked>Stream
+            <input type="radio" name="bgx_mode" value=3>Command
+            <br>
+
+            <input type="text" id="sendtext" maxlength=250>
+            <button type="button" id="bgx_senddata">送信</button><br>
+            <textarea id="recvtext" rows=30 cols=80 readonly></textarea><br>
+        </div>
+    </div>
+
+    <div class="toolfooter">
+        <small>&copy;2021 J-7SYSTEM WORKS LIMITED.</small>
+    </div>
+
+    <!-- 以下スクリプト -->
+    <script>
+        //--------------------------------------------------
+        // ロード時の処理
+        //--------------------------------------------------
+        let bgx_connected = false;
+
+        window.onload = function() {
+            // 接続ボタンのイベント
+            document.getElementById("bgx_connect").addEventListener("click", bgx_connect_onclick, false);
+
+            // モード設定ラジオボタンのイベント
+            let _check = document.getElementsByName("bgx_mode");
+            _check.forEach(element => element.addEventListener("click", xpress_chengemode));
+
+            // 送信ボタンのイベント
+            document.getElementById("bgx_senddata").addEventListener("click", () => {
+                let _text = document.getElementById("sendtext");
+                let _sendtext = (new TextEncoder).encode(_text.value + "\r\n");
+                xpress_Transmit(_sendtext);
+                _text.value = "";
+            }, false);
+            document.body.addEventListener("keydown", event => {
+                if (event.key === "Enter" && document.activeElement.id === "sendtext") {
+                    document.getElementById("bgx_senddata").click();
+                }
+            });
+        }
+
+        // 受信エリアにテキストを表示
+        function print_recievetext(bytearray) {
+            let _recv = document.getElementById("recvtext");
+            _recv.value += (new TextDecoder).decode(bytearray);
+            _recv.scrollTop = _recv.scrollHeight;
+        }
+
+
+        //--------------------------------------------------
+        // 接続ボタンの処理
+        //--------------------------------------------------
+        let interval_timer = null;
+        let ble_start_date = 0;
+
+        // 接続ボタン
+        function bgx_connect_onclick() {
+            let _btn = document.getElementById("bgx_connect");
+            if (_btn.value == "state_noconnection") {
+                document.getElementById("connect_status").innerHTML = "デバイスに接続中...";
+                ble_connect();
+            } else if (_btn.value == "state_connection") {
+                ble_disconnect();
+            }
+        }
+
+        // 接続時に呼び出される
+        function xpress_onConnection() {
+            let _btn = document.getElementById("bgx_connect");
+            _btn.value = "state_connection";
+            _btn.innerHTML = xpress_device.name + "を切断";
+
+            // 接続時間表示のインターバルタイマ
+            ble_start_date = new Date();
+            interval_timer = setInterval(() => {
+                let now = new Date();
+                let t = parseInt((now.getTime() - ble_start_date.getTime()) / 1000);
+
+                let hour = parseInt(t / 3600);
+                if (hour < 10) {
+                    hour = "0" + hour;
+                }
+                let min = parseInt((t / 60) % 60);
+                if (min < 10) {
+                    min = "0" + min;
+                }
+                let sec = t % 60;
+                if (sec < 10) {
+                    sec = "0" + sec;
+                }
+
+                document.getElementById("connect_status").innerHTML = "接続時間：" + hour + ":" + min + ":" + sec;
+            }, 100);
+
+            // チェックボックスをストリーミングにセット
+            let _check = document.getElementsByName("bgx_mode");
+            _check[0].checked = true;
+
+            // テキストエリアをクリア
+            document.getElementById("recvtext").value = "";
+        }
+
+        // 切断時に呼び出される
+        function xpress_onDisconnection() {
+            clearInterval(interval_timer);
+
+            let _btn = document.getElementById("bgx_connect");
+            _btn.value = "state_noconnection";
+            _btn.innerHTML = "デバイスを検索して接続";
+        }
+
+
+        //--------------------------------------------------
+        // BLE Xpressデバイスのスキャンと接続の処理
+        //--------------------------------------------------
+        const BLEXPRESS_SERVICE = "331a36f5-2459-45ea-9d95-6142f0c4b307";
+        const BLEXPRESS_RX_CHARACTERISTIC = "a9da6040-0823-4995-94ec-9ce41ca28833"; // ペリフェラル受信(セントラル→ペリフェラル)
+        const BLEXPRESS_TX_CHARACTERISTIC = "a73e9a10-628f-4494-a099-12efaf72258f"; // ペリフェラル送信(セントラル←ペリフェラル)
+        const BLEXPRESS_MODE_CHARACTERISTIC = "75a9f022-af03-4e41-b4bc-9de90a47d50b"; // モード設定(セントラル→ペリフェラル)
+        let xpress_device = null;
+        let xpress_send = null;
+        let xpress_recv = null;
+        let xpress_mode = null;
+        let xpress_connected = false;
+
+        // BLEデバイスの接続
+        async function ble_connect() {
+            try {
+                xpress_device = await navigator.bluetooth.requestDevice({
+                    // デバイスをフィルタリングして表示
+                    acceptAllDevices: false,
+                    // フィルターのリスト
+                    filters: [{
+                        services: [BLEXPRESS_SERVICE]
+                    }],
+                    // 接続するService
+                    optionalServices: [BLEXPRESS_SERVICE]
+                });
+                let server = await xpress_device.gatt.connect();
+                console.log("接続デバイス名 : " + server.device.name);
+
+                let service = await server.getPrimaryService(BLEXPRESS_SERVICE);
+                console.log("サービスUUID : " + service.uuid);
+
+                xpress_send = await service.getCharacteristic(BLEXPRESS_RX_CHARACTERISTIC);
+                xpress_recv = await service.getCharacteristic(BLEXPRESS_TX_CHARACTERISTIC);
+                xpress_mode = await service.getCharacteristic(BLEXPRESS_MODE_CHARACTERISTIC);
+                console.log("送信UUID : " + xpress_send.uuid + "\n受信UUID : " + xpress_recv.uuid + "\nモードUUID : " + xpress_mode.uuid);
+
+                // デバイスのDisconnectionを検出
+                xpress_device.addEventListener("gattserverdisconnected", ble_disconnect); // デバイス切断を検出
+
+                // 受信Notification開始 
+                xpress_recv.addEventListener("characteristicvaluechanged", xpress_onRecieve);
+                await xpress_recv.startNotifications()
+                    .catch(error => {
+                        // Remove Event
+                        xpress_recv.removeEventListener("characteristicvaluechanged", xpress_onRecieve);
+                        console.error(error);
+                    });
+                xpress_connected = true;
+
+                xpress_onConnection();
+            } catch (error) {
+                console.error(error);
+            }
+        }
+
+        // BLEデバイスの切断
+        function ble_disconnect() {
+            xpress_connected = false;
+            xpress_device.removeEventListener("gattserverdisconnected", ble_disconnect);
+            xpress_device.gatt.disconnect();
+            console.log(xpress_device.name + "が切断されました.");
+
+            xpress_onDisconnection();
+        }
+
+        // データ受信で呼び出される処理
+        function xpress_onRecieve(event) {
+            print_recievetext(new Uint8Array(event.target.value.buffer));
+        }
+
+        // データ送信を行う処理
+        async function xpress_Transmit(bytearray) {
+            if (xpress_connected) {
+                await xpress_send.writeValue(bytearray);
+            }
+        }
+
+        // モード切り替え
+        async function xpress_chengemode() {
+            if (xpress_connected) {
+                let _data = new Uint8Array([parseInt(this.value)]);
+                await xpress_mode.writeValue(_data);
+
+                console.log("Set mode : " + _data[0]);
+                if (_data[0] === 0x03) {
+                    let _sendtext = (new TextEncoder).encode("\r\n");
+                    await xpress_send.writeValue(_sendtext);
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>
