@@ -85,7 +85,7 @@
             // 送信ボタンのイベント
             document.getElementById("bgx_senddata").addEventListener("click", () => {
                 let _text = document.getElementById("sendtext");
-                let _sendtext = (new TextEncoder).encode(_text.value + "\r\n");
+                let _sendtext = new TextEncoder().encode(_text.value + "\r\n");
                 xpress_Transmit(_sendtext);
                 _text.value = "";
             }, false);
@@ -99,7 +99,7 @@
         // 受信エリアにテキストを表示
         function print_recievetext(bytearray) {
             let _recv = document.getElementById("recvtext");
-            _recv.value += (new TextDecoder).decode(bytearray);
+            _recv.value += new TextDecoder().decode(bytearray);
             _recv.scrollTop = _recv.scrollHeight;
         }
 
@@ -204,21 +204,28 @@
                 xpress_mode = await service.getCharacteristic(BLEXPRESS_MODE_CHARACTERISTIC);
                 console.log("送信UUID : " + xpress_send.uuid + "\n受信UUID : " + xpress_recv.uuid + "\nモードUUID : " + xpress_mode.uuid);
 
+                // OS側でペアリング済みかどうか確認
+                await xpress_mode.readValue().catch(error => {
+                    xpress_device.gatt.disconnect();
+                    console.log("OS側のペアリングがされてないデバイス.");
+                    throw error;
+                });
+
                 // デバイスのDisconnectionを検出
-                xpress_device.addEventListener("gattserverdisconnected", ble_disconnect); // デバイス切断を検出
+                xpress_device.addEventListener("gattserverdisconnected", ble_disconnect);
 
                 // 受信Notification開始 
                 xpress_recv.addEventListener("characteristicvaluechanged", xpress_onRecieve);
-                await xpress_recv.startNotifications()
-                    .catch(error => {
-                        // Remove Event
-                        xpress_recv.removeEventListener("characteristicvaluechanged", xpress_onRecieve);
-                        console.error(error);
-                    });
+                await xpress_recv.startNotifications().catch(error => {
+                    // Remove Event
+                    xpress_recv.removeEventListener("characteristicvaluechanged", xpress_onRecieve);
+                    throw error;
+                });
                 xpress_connected = true;
 
                 xpress_onConnection();
             } catch (error) {
+                document.getElementById("connect_status").innerHTML = "デバイス接続に失敗しました.";
                 console.error(error);
             }
         }
