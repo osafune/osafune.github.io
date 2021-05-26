@@ -47,11 +47,12 @@
         <!-- BLE接続 -->
         <div id="ble_connection" style="border-style: groove;">
             <button type="button" id="bgx_connect" value="state_noconnection">デバイスを検索して接続</button>
-            <span id="connect_status">接続時間：</span>
+            <span id="connect_status"></span>
         </div>
 
         <!-- 送信行と受信テキスト -->
         <div id="bgx_console" style="border-style: groove;">
+            <p><a href="https://docs.silabs.com/gecko-os/1/bgx/latest/" target="_blank">SiliconLabs Bluetooth Xpress Documentation</a></p>
             <b>MODE：</b>
             <input type="radio" name="bgx_mode" value=1 checked>Stream
             <input type="radio" name="bgx_mode" value=3>Command
@@ -72,8 +73,6 @@
         //--------------------------------------------------
         // ロード時の処理
         //--------------------------------------------------
-        let bgx_connected = false;
-
         window.onload = function() {
             // 接続ボタンのイベント
             document.getElementById("bgx_connect").addEventListener("click", bgx_connect_onclick, false);
@@ -193,10 +192,11 @@
                     // 接続するService
                     optionalServices: [BLEXPRESS_SERVICE]
                 });
-                let server = await xpress_device.gatt.connect();
+                const server = await xpress_device.gatt.connect();
+                xpress_device.addEventListener("gattserverdisconnected", ble_disconnect);
                 console.log("接続デバイス名 : " + server.device.name);
 
-                let service = await server.getPrimaryService(BLEXPRESS_SERVICE);
+                const service = await server.getPrimaryService(BLEXPRESS_SERVICE);
                 console.log("サービスUUID : " + service.uuid);
 
                 xpress_send = await service.getCharacteristic(BLEXPRESS_RX_CHARACTERISTIC);
@@ -206,26 +206,33 @@
 
                 // OS側でペアリング済みかどうか確認
                 await xpress_mode.readValue().catch(error => {
-                    xpress_device.gatt.disconnect();
                     console.log("OS側のペアリングがされてないデバイス.");
                     throw error;
                 });
 
-                // デバイスのDisconnectionを検出
-                xpress_device.addEventListener("gattserverdisconnected", ble_disconnect);
-
                 // 受信Notification開始 
                 xpress_recv.addEventListener("characteristicvaluechanged", xpress_onRecieve);
                 await xpress_recv.startNotifications().catch(error => {
-                    // Remove Event
                     xpress_recv.removeEventListener("characteristicvaluechanged", xpress_onRecieve);
+                    console.log("受信Notificationが開始できない.");
                     throw error;
                 });
+
+                // 接続時ユーザー処理の呼び出し
+                xpress_onConnection();
                 xpress_connected = true;
 
-                xpress_onConnection();
             } catch (error) {
+                // 既にconnectされていたら切断処理をする
+                if (xpress_device && xpress_device.gatt.connected) {
+                    xpress_device.removeEventListener("gattserverdisconnected", ble_disconnect);
+                    xpress_device.gatt.disconnect();
+                    xpress_device = null;
+                }
+
                 document.getElementById("connect_status").innerHTML = "デバイス接続に失敗しました.";
+                xpress_connected = false;
+
                 console.error(error);
             }
         }
@@ -238,6 +245,7 @@
             console.log(xpress_device.name + "が切断されました.");
 
             xpress_onDisconnection();
+            xpress_device = null;
         }
 
         // データ受信で呼び出される処理
