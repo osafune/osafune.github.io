@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ja" xml:lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <title>ENEBATT</title>
+
+    <style type="text/css">
+        body {
+            width: 750px;
+            margin: 15px;
+            padding: 0;
+            font-family: 'Segoe UI', Arial, Meiryo, 'MS PGothic', sans-serif;
+            font-size: 11pt;
+            line-height: 1.4;
+            color: #303830;
+        }
+        
+        h1 {
+            font-size: 200%;
+            color: #006b6b;
+            text-shadow: 5px 5px 10px #d0d0d0;
+        }
+        
+        img {
+            border: none;
+        }
+        
+        p {
+            padding: 3px 10px 3px 15px;
+        }
+        
+        li {
+            margin: 0.5em 0 0 0;
+        }
+        
+        div.heading {
+            width: 100%;
+            /* 見出しエリアの幅 */
+            margin-bottom: 1em;
+            padding: 4px 0px;
+            /* 見出しエリアのパディング（上下、左右） */
+            border-bottom: 1px #4c4c4c solid;
+            /* 見出しエリアの下境界線 */
+        }
+        
+        div.heading h2 {
+            /* 見出し文字の設定 */
+            margin: 0;
+            padding: 3px 3px 0px 5px;
+            /* 見出しのパディング（上右下左） */
+            border-left: 10px #a4c639 solid;
+            /* 見出しの左境界線 */
+            font-size: 150%;
+            /* 見出しの文字サイズ */
+            color: #006b6b;
+            line-height: 100%;
+        }
+        
+        table {
+            border-collapse: collapse;
+            margin: 0 auto;
+        }
+        
+        th {
+            color: #005ab3;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #eee
+        }
+        
+        td {
+            border-bottom: 1px dashed #999;
+        }
+        
+        th,
+        tr:last-child td {
+            border-bottom: 2px solid #005ab3;
+        }
+        
+        td,
+        th {
+            padding: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1 id="top">'ENEBATT' - 1Cell→3.3V/500mA昇圧モジュール</h1>
+    <div align=right>
+        <!--<a href="enebatt.html">English</a> / 日本語<br />-->
+        rev.A - 2021/10/13<br />
+    </div>
+
+    <div class="heading">
+        <h2 id="overview">Overview</h2>
+    </div>
+    <img src="images/enebatt/enebatt_thumb.jpg" alt="ENEBATT" />
+    <p>
+        ENEBATTは単三形ニッケル水素バッテリー1本から3.3V/500mAを出力できる高効率・高出力昇圧モジュールです。
+        <br />
+        <ul>
+            <li>単三形電池ホルダーサイズの小型モジュール (L69mm×W18mm×H18mm)。</li>
+            <li>オンボード電源スイッチ搭載。</li>
+            <li>端子はMILピッチ配置でユニバーサル基板やブレッドボードに搭載可能。</li>
+            <li>外部コントロール端子でON/OFF制御可能。</li>
+        </ul>
+    </p>
+    <br />
+
+    <div class="heading">
+        <h2 id="cautions">ご使用の前に</h2>
+    </div>
+    <p>
+        本モジュールについて下記事項を了承の上で使用してください。
+        <ul>
+            <li>本モジュールは<strong><font color=red>単三形ニッケル水素二次電池（Ni-MH AA）専用</font></strong>です。それ以外の単三形電池は絶対に使用しないでください（アルカリ電池、マンガン電池、AAリチウム電池、ニッケルカドミウム電池、単三形リチウムイオン電池、単三形のUSB充電電池等は使えません）。</li>
+            <li>発熱、液漏れ、破裂のおそれがあるので、+/-逆挿入、出力ショート、指定電池以外の使用はしないでください。</li>
+            <li>劣化した電池、外装の破損した電池は使用しないでください。</li>
+            <li>直射日光に晒される場所、高温になる場所、結露の発生する場所、氷結の発生する場所、過度の衝撃や振動の発生する場所で使用しないでください。</li>
+            <li>本モジュールは試作およびホビー用として設計されています。一般製品を意図した逆接続、逆挿入、過電圧等の保護はされていません。誤った使用は破損、発煙、発火の原因となります。</li>
+            <li>本モジュールを使用して発生した直接的、間接的損害について開発元および販売元は一切の責務を負いません。</li>
+            <li>本モジュールの内容および使用、測定データ、技術情報、サポート等に関してのお問い合わせは原則としてお答え致しかねます。</li>
+        </ul>
+    </p>
+    <br />
+
+    <div class="heading">
+        <h2 id="pinout">端子配置</h2>
+    </div>
+    <img src="images/enebatt/enebatt_pin.jpg" alt="ENEBATT Pinout diagram" />
+    <p>
+        <ul>
+            <li><strong>+BAT 端子</strong><br />バッテリーセルの+極に結線されています。
+            </li>
+            <li><strong>+3.3V 端子</strong><br />ボード電源スイッチがONまたは/EN入力がLレベルのときに3.3Vが出力されます。
+            </li>
+            <li><strong>/EN 端子</strong><br />Lレベルを入力すると出力をONにします。この端子は内部でバッテリーセルの+極にプルアップされています。必ずオープンコレクタ／オープンドレインで駆動してください。
+            </li>
+            <li><strong>GND 端子</strong><br />モジュールのGNDです。バッテリーセルの-極に結線されています。
+            </li>
+        </ul>
+    </p>
+    <br />
+
+    <div class="heading">
+        <h2 id="schmatic">回路図</h2>
+    </div>
+    <p>
+        <a href="lib/enebatt_reva_schm.pdf" target=_blank>
+            <img alt="GitHub-Mark" width="32" height="32" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyRpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoTWFjaW50b3NoKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpFNTE3OEEyQTk5QTAxMUUyOUExNUJDMTA0NkE4OTA0RCIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDpFNTE3OEEyQjk5QTAxMUUyOUExNUJDMTA0NkE4OTA0RCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkU1MTc4QTI4OTlBMDExRTI5QTE1QkMxMDQ2QTg5MDREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOkU1MTc4QTI5OTlBMDExRTI5QTE1QkMxMDQ2QTg5MDREIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+m4QGuQAAAyRJREFUeNrEl21ojWEYx895TDPbMNlBK46IUiNmPvHBSUjaqc0H8pF5+aDUKPEBqU2NhRQpX5Rv5jWlDIWlMCv7MMSWsWwmb3tpXub4XXWdPHvc9/Gc41nu+nedc7/8r/99PffLdYdDPsvkwsgkTBwsA/PADJCnzX2gHTwBt8Hl7p537/3whn04XoDZDcpBlk+9P8AFcAghzRkJwPF4zGGw0Y9QS0mAM2AnQj77FqCzrtcwB1Hk81SYojHK4DyGuQ6mhIIrBWB9Xm7ug/6B/nZrBHBegrkFxoVGpnwBMSLR9EcEcC4qb8pP14BWcBcUgewMnF3T34VqhWMFkThLJAalwnENOAKiHpJq1FZgI2AT6HZtuxZwR9GidSHtI30jOrbawxlVX78/AbNfhHlomEUJJI89O2MqeE79T8/nk8nMBm/dK576hZgmA3cp/R4l9/UeSxiHLVIlNm4nFfT0bxyuIj7LHRTKai+zdJobwMKzcZSJb0ePV5PKN+BqAAKE47UlMnERELMM3EdYP/yrd+XYb2mOiYBiQ8OQnoRBlXrl9JZix7D1pHTazu4MoyBcnYamqAjIMTR8G4FT8LuhLsexXYYjICBiqhQBvYb6fLZIJCjPypVvaOoVAW2WcasCnL2Nq82xHJNSqlCeFcDshaPK0twkAhosjZL31QYw+1rlMpWGMArl23SBsZZO58F2tlJXmjOXS+s4WGvpMiBJT/I2PInZ6lIs9/hBsNS1hS6BG0DSqmYEDRlCXQrmy50P1oDRKTSegmNbUsA0zDMwRhPJXeCE3vWLPQMvan6X8AgIa1vcR4AkGZkDR4ejJ1UHpsaVI0g2LInpOsNFUud1rhxSV+fzC9Woz2EZkWQuja7/B+jUrgtIMpy9YCW4n4K41YfzRneW5E1KJTe4B2Zq1Q5EHEtj4U3AfEzR5SVY4l7QYQPJdN2as7RKBF0BPZqqH4VgMAMBL8Byxr7y8zCZiDlnOcEKIPmUpgB5Z2ww5RdOiiRiNajUmWda5IG6WbhsyY2fx6m8gLcoJDJFkH219M3We1+cnda93pfycZpIJEL/s/wSYADmOAwAQgdpBAAAAABJRU5ErkJggg=="
+            />
+            <span style="font-size:200%;">enebatt_reva_schm.pdf</span></a>
+    </p>
+    <br />
+    <!--
+    <div class="heading">
+        <h2 id="buynow">購入先</h2>
+    </div>
+    <p>
+        <iframe frameborder="0" height="240" width="320" src="https://peridotcraft.buyshop.jp/items/38086232/widget/multi/320/240"></iframe>
+    </p>
+    <br />
+-->
+    <div class="heading">
+        <h2 id="contact">連絡先</h2>
+    </div>
+    <p>
+        Twitter - <a href="https://twitter.com/s_osafune" target=_blank>＠s_osafune</a><br /> GitHub - <a href="https://github.com/osafune" target=_blank>osafune</a><br/>
+    </p>
+
+    <div align=right style="color:#006b6b;"><strong>&copy;2021 J-7SYSTEM WORKS LIMITED.</strong></div>
+</body>
+
+</html>
