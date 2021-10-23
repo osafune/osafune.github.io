@@ -90,7 +90,7 @@
     <h1 id="top">'ENEBATT' - 1Cell→3.3V/500mA昇圧モジュール</h1>
     <div align=right>
         <!--<a href="enebatt.html">English</a> / 日本語<br />-->
-        rev.A - 2021/10/13<br />
+        rev.A - 2021/10/24<br />
     </div>
 
     <div class="heading">
@@ -98,13 +98,14 @@
     </div>
     <img src="images/enebatt/enebatt_thumb.jpg" alt="ENEBATT" />
     <p>
-        ENEBATTは単三形ニッケル水素バッテリー1本から3.3V/500mAを出力できる高効率・高出力昇圧モジュールです。
+        ENEBATTは単三形ニッケル水素バッテリー1本から3.3V/500mAを出力できる高効率・高出力昇圧モジュールです。電飾モジュール・小型WiFi/BLEモジュールのコンパクトな電源として使用できます。
         <br />
         <ul>
             <li>単三形電池ホルダーサイズの小型モジュール (L69mm×W18mm×H18mm)。</li>
             <li>オンボード電源スイッチ搭載。</li>
             <li>端子はMILピッチ配置でユニバーサル基板やブレッドボードに搭載可能。</li>
             <li>外部コントロール端子でON/OFF制御可能。</li>
+            <li>eneloop1本でおよそ1時間動作 (450mA連続出力時,バッテリー容量1900mAh)</li>
         </ul>
     </p>
     <br />
@@ -134,12 +135,100 @@
         <ul>
             <li><strong>+BAT 端子</strong><br />バッテリーセルの+極に結線されています。
             </li>
-            <li><strong>+3.3V 端子</strong><br />ボード電源スイッチがONまたは/EN入力がLレベルのときに3.3Vが出力されます。
-            </li>
             <li><strong>/EN 端子</strong><br />Lレベルを入力すると出力をONにします。この端子は内部でバッテリーセルの+極にプルアップされています。必ずオープンコレクタ／オープンドレインで駆動してください。
+                <ul>
+                    <li>/EN端子を使用する場合は、オンボードの電源スイッチはOFF位置にしてください。</li>
+                    <li>/EN端子を使用しない場合は開放のままにしてください。</li>
+                </ul>
+            </li>
+            <li><strong>+3.3V 端子</strong><br />ボード電源スイッチがONまたは/EN入力がLレベルのときに3.3Vが出力されます。
             </li>
             <li><strong>GND 端子</strong><br />モジュールのGNDです。バッテリーセルの-極に結線されています。
             </li>
+        </ul>
+    </p>
+    <br />
+
+    <div class="heading">
+        <h2 id="e_characters">電気特性</h2>
+    </div>
+    <p>
+        <ul>
+            <li><strong>定格</strong></li>
+            <table>
+                <tr>
+                    <th>Symbol</th>
+                    <th>Parameter</th>
+                    <th>Min</th>
+                    <th>Typ</th>
+                    <th>Max</th>
+                    <th>Unit</th>
+                </tr>
+                <tr>
+                    <td>VOUT</td>
+                    <td>+3.3V出力電圧(連続)</td>
+                    <td>3.13</td>
+                    <td>3.3</td>
+                    <td>3.47</td>
+                    <td>V</td>
+                </tr>
+                <tr>
+                    <td>IOUT</td>
+                    <td>+3.3V出力電流(連続)</td>
+                    <td></td>
+                    <td></td>
+                    <td>500</td>
+                    <td>mA</td>
+                </tr>
+                <tr>
+                    <td>VEN_L</td>
+                    <td>/EN端子アクティブ電圧</td>
+                    <td>-0.3</td>
+                    <td></td>
+                    <td>0.6</td>
+                    <td>V</td>
+                </tr>
+                <tr>
+                    <td>VEN_H</td>
+                    <td>/EN端子非アクティブ電圧</td>
+                    <td>1.0</td>
+                    <td></td>
+                    <td>VBATT</td>
+                    <td>V</td>
+                </tr>
+                <tr>
+                    <td>VBATT</td>
+                    <td>バッテリー端子電圧</td>
+                    <td>1.0</td>
+                    <td></td>
+                    <td>1.8</td>
+                    <td>V</td>
+                </tr>
+                <tr>
+                    <td>IBATT(DC)</td>
+                    <td>バッテリー放電電流(IOUT=500mA)</td>
+                    <td></td>
+                    <td></td>
+                    <td>1.75</td>
+                    <td>A</td>
+                </tr>
+                <tr>
+                    <td>IBATT(SD)</td>
+                    <td>シャットダウン時バッテリー放電電流</td>
+                    <td></td>
+                    <td>0.5</td>
+                    <td>3.0</td>
+                    <td>uA</td>
+                </tr>
+                <tr>
+                    <td>TENV</td>
+                    <td>使用時環境温度</td>
+                    <td>0</td>
+                    <td></td>
+                    <td>40</td>
+                    <td>℃</td>
+                </tr>
+            </table><br /> * 表記にない諸元については各部品のデータシートを参照してください。
         </ul>
     </p>
     <br />
