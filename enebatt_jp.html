@@ -138,11 +138,11 @@
             </li>
             <li><strong>/EN 端子</strong><br />Lレベルを入力すると出力をONにします。この端子は内部でバッテリーセルの+極にプルアップされています。必ずオープンコレクタ／オープンドレインで駆動してください。
                 <ul>
-                    <li>/EN端子を使用する場合は、オンボードの電源スイッチはOFF位置にしてください。</li>
-                    <li>/EN端子を使用しない場合は開放のままにしてください。</li>
+                    <li>/EN端子を使用する場合、オンボードの電源スイッチはOFF位置にしてください。</li>
+                    <li>/EN端子を使用しない（オンボード電源スイッチを使う）場合は開放のままにしてください。</li>
                 </ul>
             </li>
-            <li><strong>+3.3V 端子</strong><br />ボード電源スイッチがONまたは/EN入力がLレベルのときに3.3Vが出力されます。
+            <li><strong>+3.3V 端子</strong><br />オンボード電源スイッチがONまたは/EN端子入力がLレベルのときに3.3Vが出力されます。
             </li>
             <li><strong>GND 端子</strong><br />モジュールのGNDです。バッテリーセルの-極に結線されています。
             </li>
@@ -166,7 +166,7 @@
                     <th>Unit</th>
                 </tr>
                 <tr>
-                    <td>VOUT</td>
+                    <td>V<sub>OUT</sub></td>
                     <td>+3.3V出力電圧(連続)</td>
                     <td>3.15</td>
                     <td>3.3</td>
@@ -174,7 +174,7 @@
                     <td>V</td>
                 </tr>
                 <tr>
-                    <td>IOUT</td>
+                    <td>I<sub>OUT</sub></td>
                     <td>+3.3V出力電流(連続)</td>
                     <td></td>
                     <td></td>
@@ -182,23 +182,31 @@
                     <td>mA</td>
                 </tr>
                 <tr>
-                    <td>VEN_L</td>
+                    <td>V<sub>EN_L</sub></td>
                     <td>/EN端子アクティブ電圧</td>
                     <td>-0.3</td>
                     <td></td>
-                    <td>VBATT-0.6</td>
+                    <td>V<sub>BATT</sub> - 0.6</td>
                     <td>V</td>
                 </tr>
                 <tr>
-                    <td>VEN_H</td>
+                    <td>V<sub>EN_H</sub></td>
                     <td>/EN端子非アクティブ電圧</td>
                     <td>1.0</td>
                     <td></td>
-                    <td>VBATT</td>
+                    <td>V<sub>BATT</sub></td>
                     <td>V</td>
                 </tr>
                 <tr>
-                    <td>VBATT</td>
+                    <td>I<sub>EN</sub></td>
+                    <td>/EN端子電流</td>
+                    <td></td>
+                    <td></td>
+                    <td>-12</td>
+                    <td>uA</td>
+                </tr>
+                <tr>
+                    <td>V<sub>BATT</sub></td>
                     <td>バッテリー端子電圧</td>
                     <td>1.0</td>
                     <td></td>
@@ -206,7 +214,7 @@
                     <td>V</td>
                 </tr>
                 <tr>
-                    <td>IBATT(DC)</td>
+                    <td>I<sub>BATT</sub>(DC)</td>
                     <td>バッテリー放電電流(IOUT=500mA)</td>
                     <td></td>
                     <td></td>
@@ -214,7 +222,7 @@
                     <td>A</td>
                 </tr>
                 <tr>
-                    <td>IBATT(SD)</td>
+                    <td>I<sub>BATT</sub>(SD)</td>
                     <td>シャットダウン時バッテリー放電電流</td>
                     <td></td>
                     <td>0.5</td>
@@ -222,7 +230,7 @@
                     <td>uA</td>
                 </tr>
                 <tr>
-                    <td>TENV</td>
+                    <td>T<sub>ENV</sub></td>
                     <td>使用時環境温度（結露無き事）</td>
                     <td>0</td>
                     <td></td>
