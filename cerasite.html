@@ -63,7 +63,7 @@
 <body>
 
     <h1 id="top">'CERASITE' - DIP scale FPGA board</h1>
-    <div align=right>English / <a href="cerasite_jp.html">日本語</a></div>
+    <div align=right>Last update Oct.11,2022<br />English / <a href="cerasite_jp.html">日本語</a></div>
 
     <div class="heading">
         <h2 id="overview">Overview</h2>
@@ -112,8 +112,8 @@
         <ul>
             <li>Pins 3, 18, 19, 20 pull up internally and PIN 2 is pulled down internally.</li>
             <li>If the nCONFIG pin is used as a user I/O, it is an input-only.</li>
-            <li>If you use the JTAG feature pin as a user I/O, the JTAGEN pin is a function switching pin and cannot be used as a user I/O. In that case, the JTAGEN pin should pull down with 1kΩ. Also, when using the JTAG function, the JTAGEN pin must be
-                fixed at H level.</li>
+            <li>If you use the JTAG feature pin as a user I/O, the JTAGEN pin is a function switching pin and cannot be used as a user I/O. In that case, the JTAGEN pin should pull down with 1kΩ. Also, when using the JTAG function, the JTAGEN pin must be fixed at H level.</li>
+            <li>⚠️ Currently, write/verify/blank check failures may occur in Quartus Prime 21.1. Please use version 20.1 or earlier.</li>
         </ul>
     </p>
     <br />

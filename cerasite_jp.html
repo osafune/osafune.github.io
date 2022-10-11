@@ -63,7 +63,7 @@
 <body>
 
     <h1 id="top">'CERASITE' - DIPスケールFPGAボード</h1>
-    <div align=right><a href="cerasite.html">English</a> / 日本語</div>
+    <div align=right>2022/10/11 更新<br /><a href="cerasite.html">English</a> / 日本語</div>
 
     <div class="heading">
         <h2 id="overview">Overview</h2>
@@ -112,6 +112,7 @@
             <li>3, 18, 19, 20番ピンは内部で10kΩでプルアップされています。また2番ピンは内部で1kΩでプルダウンされています。</li>
             <li>nCONFIGピンをユーザーI/Oとして使う場合は入力ピンとしてのみ使用できます。</li>
             <li>JTAGピンをユーザーI/Oとして使う場合はJTAGENピンは機能切り替えピンとして動作し、ユーザーI/Oとしては使えません。ユーザーI/Oに切り替える場合はJTAGENピンは1kΩでプルダウンします。JTAG機能に切り替える場合はJTAGENピンをHレベルに固定します。</li>
+            <li>⚠️ QuartusPrime 21.1 において書き込み・ベリファイ・ブランクチェック不良の発生が確認されています。20.1以前のバージョンをご利用下さい。</li>
         </ul>
     </p>
     <br />
