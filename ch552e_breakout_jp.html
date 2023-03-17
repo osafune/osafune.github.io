@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Expires" content="259200‬">
+    <title>CH552E Breakout</title>
+
+    <style type="text/css">
+        body {
+            width: 800px;
+            margin: 15px;
+            padding: 0;
+            font-family: "Segoe UI", "Arial", "Meiryo", sans-serif;
+            font-size: 11pt;
+            line-height: 1.6;
+            color: #303830;
+        }
+        
+        h1 {
+            font-size: 200%;
+            color: #006b6b;
+            text-shadow: 5px 5px 10px #d0d0d0;
+        }
+        
+        img {
+            border: none;
+        }
+        
+        p {
+            padding: 3px 10px 3px 15px;
+        }
+        
+        li {
+            margin: 0.5em 0 0 0;
+        }
+        
+        div.heading {
+            width: 100%;
+            /* 見出しエリアの幅 */
+            margin-bottom: 1em;
+            padding: 4px 0px;
+            /* 見出しエリアのパディング（上下、左右） */
+            border-bottom: 1px #4c4c4c solid;
+            /* 見出しエリアの下境界線 */
+        }
+        
+        div.heading h2 {
+            /* 見出し文字の設定 */
+            margin: 0;
+            padding: 3px 3px 0px 5px;
+            /* 見出しのパディング（上右下左） */
+            border-left: 10px #a4c639 solid;
+            /* 見出しの左境界線 */
+            font-size: 150%;
+            /* 見出しの文字サイズ */
+            color: #006b6b;
+            line-height: 100%;
+        }
+        
+        table {
+            border-collapse: collapse;
+            margin: 0 auto;
+        }
+        
+        th {
+            color: #005ab3;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #eee
+        }
+        
+        td {
+            border-bottom: 1px dashed #999;
+        }
+        
+        th,
+        tr:last-child td {
+            border-bottom: 2px solid #005ab3;
+        }
+        
+        td,
+        th {
+            padding: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1 id="top">'CH552E Breakout' - 8pin DIP ch55xduino board</h1>
+    <div align=right>
+        <!--<a href="ch552e_breakout.html">English</a> / 日本語<br />-->
+        rev.A - 2023/03/17<br />
+    </div>
+
+    <div class="heading">
+        <h2 id="overview">Overview</h2>
+    </div>
+    <div align="center">
+        <img src="images/ch552e/ch552e_thumb.jpg" alt="CH552E Breakout"/>
+    </div>
+    <p>
+        このボードはch55xduinoに対応したWCHの8bit USBマイコン CH552Eのブレークアウトボードです。<br />
+        8ピンDIPサイズにUSB Type-Cエッジコネクタを持ち、Type-Cケーブルをそのまま接続してボードへの書き込み・実行ができます。また、端面スルーホールおよび部品の片面実装でユニバーサル基板へ直接実装が可能です。<br />
+        試作・プロトタイピングの他、CH552E変換ボードとしてもおすすめです。
+        <br />
+        <ul>
+            <li>300mil幅8ピンDIPサイズの極小モジュール (L16.4mm×W7.62mm、エッジコネクタ部含む)</li>
+            <li>CH552E（e8051コア 24MHz, ROM 16kByte, RAM 1280Byte, EEPROM 128Byte）</li>
+            <li>I/O数は最大6本（アナログ入力2本、5Vトレラント入力4本）</li>
+            <li>USB 2.0 FS/LSターゲット機能内蔵</li>
+            <li>USB Type-Cエッジコネクタ装備</li>
+            <li>ch55xduinoに対応しArduino IDEで開発可能</li>
+            <li>オンボードDFUスイッチ（Bootloaderモードスイッチ）搭載</li>
+            <li>端面スルーホールおよび片面実装で基板に直接マウント可能</li>
+        </ul>
+    </p>
+    <br />
+
+    <div class="heading">
+        <h2 id="boardpinout">Board pinout</h2>
+    </div>
+    <img src="images/ch552e/ch552e_breakout_pinout.png" alt="CH552E Brealout Pinout diagram" />
+    <p>
+        ピンアウト図およびボード寸法 - <a href="lib/ch552e_breakout_pinout.pdf" target=_blank>ch552e_breakout_pinout.pdf</a>
+    </p>
+    <br />
+
+    <div class="heading">
+        <h2 id="howtouse">How to use</h2>
+    </div>
+    <p>
+        このボードはch55xduinoでの開発をターゲットにしています。以下にWindows10環境での環境構築手順を説明します。Arduino IDEは1.8.16以降をインストールしてください。
+        <br />
+        <ol>
+            <li>Arduino IDEの「ファイル→環境設定」を開き、「追加のボードマネージャーのURL」に次のURLを追加します。<br />
+                <a href="https://raw.githubusercontent.com/DeqingSun/ch55xduino/ch55xduino/package_ch55xduino_mcs51_index.json" target="_blank">https://raw.githubusercontent.com/DeqingSun/ch55xduino/ch55xduino/package_ch55xduino_mcs51_index.json</a>
+            </li>
+
+            <li>「ツール→ボード」から「ボードマネージャー」を選択し、検索に'ch55x'と入力します。<br />
+                現れた「CH55xDuino MCS51 plain C core(non-C++)」をインストールします。
+            </li>
+
+            <li>WCHのサイトからWCHISP Studioをダウンロードしてインストールします。<br />
+                <a href="https://www.wch.cn/downloads/WCHISPTool_Setup_exe.html" target="_blank">https://www.wch.cn/downloads/WCHISPTool_Setup_exe.html</a><br />
+                これはCH552E用のドライバーをインストールするためで、ch55xduinoで開発する場合はツールそのものは使いません。
+            </li>
+        </ol>
+    </p>
+    <p>
+        Arduino IDEからの書き込みには以下の2つの方法で行います。<br />
+        CH552EのプログラムROMの書き換え回数は200回程度しかないため、書き込み回数には注意してください。
+        <br />
+        <ol>
+            <li><strong>DFUモードで書き込み</strong><br />
+                CH552Eが未プログラムの状態、またはch55xduino Default CDCを使っていない場合は、ボード上のDFUスイッチを押しながらUSBに接続します。このときCOMポートは現れません。<br />
+                ボタンを離して、Arduino IDEでシリアルポートを選択せずに「スケッチ→マイコンボードに書き込む」を選択します。<br />
+            </li>
+
+            <li><strong>Default CDCで書き込み</strong><br />
+                USB Settingsで"Default CDC"を選択していた場合は、PCに接続するとCOMポートが現れます。<br />
+                この場合は通常通りArduino IDEでシリアルポートを選択してマイコンボードに書き込みます。<br />
+            </li>
+        </ol>
+    </p>
+    <br />
+
+    <div class="heading">
+        <h2 id="Resource">Resource</h2>
+    </div>
+    <h3>回路図</h3>
+    <p>
+        <a href="lib/ch55xduino_dip8_rev.a_schem.pdf" target=_blank>
+        <img alt="GitHub-Mark" width="32" height="32" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyRpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoTWFjaW50b3NoKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpFNTE3OEEyQTk5QTAxMUUyOUExNUJDMTA0NkE4OTA0RCIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDpFNTE3OEEyQjk5QTAxMUUyOUExNUJDMTA0NkE4OTA0RCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkU1MTc4QTI4OTlBMDExRTI5QTE1QkMxMDQ2QTg5MDREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOkU1MTc4QTI5OTlBMDExRTI5QTE1QkMxMDQ2QTg5MDREIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+m4QGuQAAAyRJREFUeNrEl21ojWEYx895TDPbMNlBK46IUiNmPvHBSUjaqc0H8pF5+aDUKPEBqU2NhRQpX5Rv5jWlDIWlMCv7MMSWsWwmb3tpXub4XXWdPHvc9/Gc41nu+nedc7/8r/99PffLdYdDPsvkwsgkTBwsA/PADJCnzX2gHTwBt8Hl7p537/3whn04XoDZDcpBlk+9P8AFcAghzRkJwPF4zGGw0Y9QS0mAM2AnQj77FqCzrtcwB1Hk81SYojHK4DyGuQ6mhIIrBWB9Xm7ug/6B/nZrBHBegrkFxoVGpnwBMSLR9EcEcC4qb8pP14BWcBcUgewMnF3T34VqhWMFkThLJAalwnENOAKiHpJq1FZgI2AT6HZtuxZwR9GidSHtI30jOrbawxlVX78/AbNfhHlomEUJJI89O2MqeE79T8/nk8nMBm/dK576hZgmA3cp/R4l9/UeSxiHLVIlNm4nFfT0bxyuIj7LHRTKai+zdJobwMKzcZSJb0ePV5PKN+BqAAKE47UlMnERELMM3EdYP/yrd+XYb2mOiYBiQ8OQnoRBlXrl9JZix7D1pHTazu4MoyBcnYamqAjIMTR8G4FT8LuhLsexXYYjICBiqhQBvYb6fLZIJCjPypVvaOoVAW2WcasCnL2Nq82xHJNSqlCeFcDshaPK0twkAhosjZL31QYw+1rlMpWGMArl23SBsZZO58F2tlJXmjOXS+s4WGvpMiBJT/I2PInZ6lIs9/hBsNS1hS6BG0DSqmYEDRlCXQrmy50P1oDRKTSegmNbUsA0zDMwRhPJXeCE3vWLPQMvan6X8AgIa1vcR4AkGZkDR4ejJ1UHpsaVI0g2LInpOsNFUud1rhxSV+fzC9Woz2EZkWQuja7/B+jUrgtIMpy9YCW4n4K41YfzRneW5E1KJTe4B2Zq1Q5EHEtj4U3AfEzR5SVY4l7QYQPJdN2as7RKBF0BPZqqH4VgMAMBL8Byxr7y8zCZiDlnOcEKIPmUpgB5Z2ww5RdOiiRiNajUmWda5IG6WbhsyY2fx6m8gLcoJDJFkH219M3We1+cnda93pfycZpIJEL/s/wSYADmOAwAQgdpBAAAAABJRU5ErkJggg=="/>
+        <span style="font-size:200%;">ch55xduino_dip8_rev.a_schem.pdf</span></a>
+    </p>
+    <h3>ch55xduinoのGithubリポジトリ</h3>
+    <p>
+        <a href="https://github.com/DeqingSun/ch55xduino" target=_blank>
+        <img alt="GitHub-Mark" width="32" height="32" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyRpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoTWFjaW50b3NoKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpFNTE3OEEyQTk5QTAxMUUyOUExNUJDMTA0NkE4OTA0RCIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDpFNTE3OEEyQjk5QTAxMUUyOUExNUJDMTA0NkE4OTA0RCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkU1MTc4QTI4OTlBMDExRTI5QTE1QkMxMDQ2QTg5MDREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOkU1MTc4QTI5OTlBMDExRTI5QTE1QkMxMDQ2QTg5MDREIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+m4QGuQAAAyRJREFUeNrEl21ojWEYx895TDPbMNlBK46IUiNmPvHBSUjaqc0H8pF5+aDUKPEBqU2NhRQpX5Rv5jWlDIWlMCv7MMSWsWwmb3tpXub4XXWdPHvc9/Gc41nu+nedc7/8r/99PffLdYdDPsvkwsgkTBwsA/PADJCnzX2gHTwBt8Hl7p537/3whn04XoDZDcpBlk+9P8AFcAghzRkJwPF4zGGw0Y9QS0mAM2AnQj77FqCzrtcwB1Hk81SYojHK4DyGuQ6mhIIrBWB9Xm7ug/6B/nZrBHBegrkFxoVGpnwBMSLR9EcEcC4qb8pP14BWcBcUgewMnF3T34VqhWMFkThLJAalwnENOAKiHpJq1FZgI2AT6HZtuxZwR9GidSHtI30jOrbawxlVX78/AbNfhHlomEUJJI89O2MqeE79T8/nk8nMBm/dK576hZgmA3cp/R4l9/UeSxiHLVIlNm4nFfT0bxyuIj7LHRTKai+zdJobwMKzcZSJb0ePV5PKN+BqAAKE47UlMnERELMM3EdYP/yrd+XYb2mOiYBiQ8OQnoRBlXrl9JZix7D1pHTazu4MoyBcnYamqAjIMTR8G4FT8LuhLsexXYYjICBiqhQBvYb6fLZIJCjPypVvaOoVAW2WcasCnL2Nq82xHJNSqlCeFcDshaPK0twkAhosjZL31QYw+1rlMpWGMArl23SBsZZO58F2tlJXmjOXS+s4WGvpMiBJT/I2PInZ6lIs9/hBsNS1hS6BG0DSqmYEDRlCXQrmy50P1oDRKTSegmNbUsA0zDMwRhPJXeCE3vWLPQMvan6X8AgIa1vcR4AkGZkDR4ejJ1UHpsaVI0g2LInpOsNFUud1rhxSV+fzC9Woz2EZkWQuja7/B+jUrgtIMpy9YCW4n4K41YfzRneW5E1KJTe4B2Zq1Q5EHEtj4U3AfEzR5SVY4l7QYQPJdN2as7RKBF0BPZqqH4VgMAMBL8Byxr7y8zCZiDlnOcEKIPmUpgB5Z2ww5RdOiiRiNajUmWda5IG6WbhsyY2fx6m8gLcoJDJFkH219M3We1+cnda93pfycZpIJEL/s/wSYADmOAwAQgdpBAAAAABJRU5ErkJggg=="/>
+        <span style="font-size:200%;">DeqingSun/ch55xduino</span></a>
+    </p>
+    <h3>WCH CH552Eの情報</h3>
+    <p>
+        <a href="http://www.wch-ic.com/products/CH552.html" target=_blank>
+        <img alt="Cloud-Mark" width="32" height="32" src="data:image/png;base64,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"/>
+        <span style="font-size:200%;">8-bit USB Device MCU - CH552</span></a>
+    </p>
+    <h3>参考</h3>
+    <p>
+        <a href="https://qiita.com/akita11/items/d7baed4ca3c06e292637" target=_blank>
+        <img alt="Qiita-Mark" width="32" height="32" src="data:image/png;base64,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"/>
+        <span style="font-size:200%;">CH55xをArduinoIDEで使う (@akita11)</span></a><br />
+        書籍も出ています → <a href="https://amzn.to/3YUKuaa" target="_blank">CH55xでどうでしょう (Amazon)</a>
+    </p>
+    <br />
+
+    <div class="heading">
+        <h2 id="buynow">Buy now</h2>
+    </div>
+    <p>
+        準備中
+    </p>
+    <br />
+
+    <div class="heading">
+        <h2 id="contact">Contact us</h2>
+    </div>
+    <p>
+        Twitter - <a href="https://twitter.com/s_osafune" target=_blank>＠s_osafune</a><br />
+        GitHub - <a href="https://github.com/osafune" target=_blank>osafune</a><br/>
+    </p>
+
+    <div align=right style="color:#006b6b;"><strong>&copy;2023 S.OSAFUNE, J-7SYSTEM WORKS LIMITED.</strong></div>
+</body>
+
+</html>
