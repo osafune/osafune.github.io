@@ -14,3 +14,4 @@ URLショートカット
 [MDC-1 マニュアル](https://osafune.github.io/mdc1_docs_jp.html)  
 [MDC-1 Rev.B マニュアル](https://osafune.github.io/mdc1_revb_docs_jp.html)  
 [ENEBATT マニュアル](https://osafune.github.io/enebatt_jp.html)  
+[CH552E Breakout マニュアル](https://osafune.github.io/ch552e_breakout_jp.html)  
