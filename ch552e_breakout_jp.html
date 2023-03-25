@@ -91,7 +91,7 @@
     <h1 id="top">'CH552E Breakout' - 8pin DIP ch55xduino board</h1>
     <div align=right>
         <!--<a href="ch552e_breakout.html">English</a> / 日本語<br />-->
-        rev.A - 2023/03/17<br />
+        rev.A - 2023/03/25<br />
     </div>
 
     <div class="heading">
@@ -104,7 +104,6 @@
         このボードはch55xduinoに対応したWCHの8bit USBマイコン CH552Eのブレークアウトボードです。<br />
         8ピンDIPサイズにUSB Type-Cエッジコネクタを持ち、Type-Cケーブルをそのまま接続してボードへの書き込み・実行ができます。また、端面スルーホールおよび部品の片面実装でユニバーサル基板へ直接実装が可能です。<br />
         試作・プロトタイピングの他、CH552E変換ボードとしてもおすすめです。
-        <br />
         <ul>
             <li>300mil幅8ピンDIPサイズの極小モジュール (L16.4mm×W7.62mm、エッジコネクタ部含む)</li>
             <li>CH552E（e8051コア 24MHz, ROM 16kByte, RAM 1280Byte, EEPROM 128Byte）</li>
@@ -114,6 +113,22 @@
             <li>ch55xduinoに対応しArduino IDEで開発可能</li>
             <li>オンボードDFUスイッチ（Bootloaderモードスイッチ）搭載</li>
             <li>端面スルーホールおよび片面実装で基板に直接マウント可能</li>
+        </ul>
+    </p>
+    <br />
+
+    <div class="heading">
+        <h2 id="agreement">Agreement</h2>
+    </div>
+    <p>
+        ご使用の前に、本モジュールについて下記事項を了承の上で使用してください。
+        <ul>
+            <li>Type-Cエッジコネクタはテスト用途です。本来のType-C規格の耐久性や信頼性を満たしたものではありません。</li>
+            <li>直射日光に晒される場所、高温や低温になる場所、結露・氷結の発生する場所、過度の衝撃や振動の発生する場所で使用しないでください。また高信頼性が必要な箇所には使用できません。</li>
+            <li>本モジュールは試作およびホビー用として設計されています。一般製品を意図した逆接続、逆挿入、過電圧等の保護はされていません。誤った使用は破損、発煙、発火の原因となります。</li>
+            <li>本モジュールを使用して発生した直接的、間接的損害について開発元および販売元は一切の責務を負いません。</li>
+            <li>本モジュールの内容および使用、測定データ、技術情報、サポート等に関してのお問い合わせは原則としてお答えできません。</li>
+            <li>部品調達や性能改善に伴い、予告なく仕様または部品の変更を行う場合があります。</li>
         </ul>
     </p>
     <br />
@@ -132,7 +147,6 @@
     </div>
     <p>
         このボードはch55xduinoでの開発をターゲットにしています。以下にWindows10環境での環境構築手順を説明します。Arduino IDEは1.8.16以降をインストールしてください。
-        <br />
         <ol>
             <li>Arduino IDEの「ファイル→環境設定」を開き、「追加のボードマネージャーのURL」に次のURLを追加します。<br />
                 <a href="https://raw.githubusercontent.com/DeqingSun/ch55xduino/ch55xduino/package_ch55xduino_mcs51_index.json" target="_blank">https://raw.githubusercontent.com/DeqingSun/ch55xduino/ch55xduino/package_ch55xduino_mcs51_index.json</a>
@@ -149,19 +163,31 @@
         </ol>
     </p>
     <p>
-        Arduino IDEからの書き込みには以下の2つの方法で行います。<br />
+        Arduino IDEからの書き込みには以下の2つの方法で行うことができます。<br />
         CH552EのプログラムROMの書き換え回数は200回程度しかないため、書き込み回数には注意してください。
-        <br />
-        <ol>
+        <ul>
             <li><strong>DFUモードで書き込み</strong><br />
                 CH552Eが未プログラムの状態、またはch55xduino Default CDCを使っていない場合は、ボード上のDFUスイッチを押しながらUSBに接続します。このときCOMポートは現れません。<br />
                 ボタンを離して、Arduino IDEでシリアルポートを選択せずに「スケッチ→マイコンボードに書き込む」を選択します。<br />
+                CH552Eに既にプログラムが書き込まれている場合、数十秒で自動的にDFUモードが解除されてしまいます。この場合はWCHISP Studioで書き込みを行ってください。<br />
             </li>
 
             <li><strong>Default CDCで書き込み</strong><br />
                 USB Settingsで"Default CDC"を選択していた場合は、PCに接続するとCOMポートが現れます。<br />
                 この場合は通常通りArduino IDEでシリアルポートを選択してマイコンボードに書き込みます。<br />
             </li>
+        </ul>
+    </p>
+    <p>
+        Arduino IDEを使わずにWCHISP Studioで書き込みをする場合は以下の手順で行います。<br />
+        <ol>
+            <li>Arduino IDE側で「スケッチ→コンパイルしたバイナリを出力」を選択してhexファイル生成します。hexファイルはスケッチと同じフォルダに生成されます。</li>
+
+            <li>WCHISP studioを起動し、ボード上のDFUスイッチを押しながらUSBに接続します。DFUモードで接続されていれば「Chip Option」のDev Listに「CH55x-#1 device」が表示されます。</li>
+
+            <li>「Download File」のObject Fileカラムに1.で生成したhexファイルを設定し、右のチェックボックスにチェックを入れます。</li>
+
+            <li>下の「Download」ボタンを押してデバイスに書き込みます。もしDFUモードが解除されていた場合は、再度ボード上のDFUスイッチを押しながらUSBに接続して書き込みを行います。</li>
         </ol>
     </p>
     <br />
