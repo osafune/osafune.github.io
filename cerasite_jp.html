@@ -4,16 +4,18 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="Expires" content="259200‬">
+    <meta name="author" content="S.OSAFUNE, J-7SYSTEM WORKS LIMITED.">
+    <meta name="copyright" content="(c)2014-2023 S.OSAFUNE, J-7SYSTEM WORKS LIMITED.">
     <title>'CERASITE' - DIP scale FPGA board</title>
 
     <style type="text/css">
         body {
-            width: 700px;
+            width: 800px;
             margin: 15px;
             padding: 0;
-            font-family: 'Segoe UI', Arial, Meiryo, 'MS PGothic', sans-serif;
+            font-family: "Segoe UI", "Arial", "Meiryo", sans-serif;
             font-size: 11pt;
-            line-height: 1.4;
+            line-height: 1.6;
             color: #303830;
         }
         
@@ -63,18 +65,20 @@
 <body>
 
     <h1 id="top">'CERASITE' - DIPスケールFPGAボード</h1>
-    <div align=right>2022/10/11 更新<br /><a href="cerasite.html">English</a> / 日本語</div>
+    <div align=right>2023/04/06 更新<br /><a href="cerasite.html">English</a> / 日本語</div>
 
     <div class="heading">
         <h2 id="overview">Overview</h2>
     </div>
-    <img src="images/sodalite/cerasite_thumb.jpg" alt="CERASITE C-02" />
+    <div align="center">
+        <img src="images/cerasite/cerasite_thumb.jpg" alt="CERASITE C-02" />
+    </div>
     <p>
         CERASITE(セラサイト) C-02は300mil幅DIPサイズの超小型のFPGAボードです。<br /> Intel MAX10 FPGA搭載し、電源回路、OSCをコンパクトに集積しています。外形寸法は300mil幅20ピンDIP ICと同等になっており、ユニバーサル基板やブレッドボードでのプロトタイピングに最適です。<br />
     </p>
     <p>
         <ul>
-            <li>300mil幅20ピンDIPサイズ(25.7 mm × 7.6 mm)</li>
+            <li>300mil幅20ピンDIPサイズ (25.7 mm × 7.6 mm)</li>
             <li>Intel MAX10 10M02DCV36 (2kLEs, 108kbitメモリー, 96kbit flash, VBGA36)</li>
             <li>オンボードOSC (50.0 MHz)</li>
             <li>最大17本のユーザーI/O数</li>
@@ -86,14 +90,30 @@
     </p>
     <p>
         C-02 ボードブロック図<br />
-        <img src="images/sodalite/cerasite_diag.png" alt="CERASITE board block diagram" />
+        <img src="images/cerasite/cerasite_diag.png" alt="CERASITE board block diagram" />
+    </p>
+    <br />
+
+    <div class="heading">
+        <h2 id="agreement">使用許諾</h2>
+    </div>
+    <p>
+        ご使用の前に、本モジュールについて下記事項を了承の上で使用してください。
+        <ul>
+            <li>直射日光に晒される場所、高温や低温になる場所、結露・氷結の発生する場所、過度の衝撃や振動の発生する場所で使用しないでください。また高信頼性が必要な箇所には使用できません。</li>
+            <li>本モジュール上のパッケージは大変割れやすくなっています。モジュールを曲げたり衝撃を与えたりすると破損する恐れがあります。取り扱いには十分注意してください。</li>
+            <li>本モジュールは試作およびホビー用として設計されています。一般製品を意図した逆接続、逆挿入、過電圧等の保護はされていません。誤った使用は破損、発煙、発火の原因となります。</li>
+            <li>本モジュールを使用して発生した直接的、間接的損害について開発元および販売元は一切の責務を負いません。</li>
+            <li>本モジュールの内容および使用、測定データ、技術情報、サポート等に関してのお問い合わせは原則としてお答えできません。</li>
+            <li>部品調達や性能改善に伴い、予告なく仕様または部品の変更を行う場合があります。</li>
+        </ul>
     </p>
     <br />
 
     <div class="heading">
         <h2 id="boardpinout">ボードピン配置図</h2>
     </div>
-    <img src="images/sodalite/cerasite_pin.png" alt="CERASITE Pinout diagram" />
+        <img src="images/cerasite/cerasite_pin.png" alt="CERASITE Pinout diagram" />
     <p>
         <ul>
             <li>TDO, TCK, TDI, TMSおよびJTAGENはユーザーI/Oと排他利用です。</li>
@@ -106,7 +126,7 @@
     <div class="heading">
         <h2 id="typicalconnections">代表的な結線</h2>
     </div>
-    <img src="images/sodalite/cerasite_config.png" alt="CERASITE typical connections" />
+    <img src="images/cerasite/cerasite_config.png" alt="CERASITE typical connections" />
     <p>
         <ul>
             <li>3, 18, 19, 20番ピンは内部で10kΩでプルアップされています。また2番ピンは内部で1kΩでプルダウンされています。</li>
@@ -138,7 +158,7 @@
         <h2 id="buynow">購入先</h2>
     </div>
     <p>
-        <iframe frameborder="0" height="240" width="320" src="https://peridotcraft.buyshop.jp/items/3105609/widget/multi/320/240"></iframe>
+        準備中
     </p>
     <br />
 
@@ -146,10 +166,11 @@
         <h2 id="contact">連絡先</h2>
     </div>
     <p>
-        Twitter - <a href="https://twitter.com/s_osafune" target=_blank>＠s_osafune</a><br /> GitHub - <a href="https://github.com/osafune" target=_blank>osafune</a><br/>
+        Mail - sales@j7system.jp （初期不良等につきましては購入先にお問い合わせください）<br />
+        GitHub - <a href="https://github.com/osafune" target=_blank>osafune</a><br />
     </p>
 
-    <div align=right style="color:#006b6b;"><strong>&copy;2014-2019 J-7SYSTEM WORKS LIMITED.</strong></div>
+    <div align=right style="color:#006b6b;"><strong>&copy;2014-2023 S.OSAFUNE, J-7SYSTEM WORKS LIMITED.</strong></div>
 </body>
 
 </html>
