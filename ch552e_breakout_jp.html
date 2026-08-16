@@ -59,7 +59,20 @@
             color: #006b6b;
             line-height: 100%;
         }
-        
+
+        div.code-box {
+            background-color: #1e1e1e;   /* 背景色（ダークトーン） */
+            color: #d4d4d4;              /* 文字色 */
+            font-family: Consolas, Monaco, 'Courier New', Courier, monospace; /* 等幅フォント */
+            font-size: 14px;             /* フォントサイズ */
+            line-height: 1.6;            /* 行間 */
+            padding: 16px;               /* 内側の余白 */
+            border-radius: 6px;          /* 角丸 */
+            overflow-x: auto;            /* 長いコードの横スクロール対応 */
+            tab-size: 4;                 /* タブ幅 */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 軽い影 */
+        }
+
         table {
             border-collapse: collapse;
             margin: 0 auto;
@@ -93,7 +106,7 @@
     <h1 id="top">'CH552E Breakout' - 8pin DIP ch55xduino board</h1>
     <div align=right>
         <!--<a href="ch552e_breakout.html">English</a> / 日本語<br />-->
-        rev.A - 2025/11/17<br />
+        rev.A - 2026/08/17<br />
     </div>
 
     <div class="heading">
@@ -158,7 +171,8 @@
         <h2 id="howtouse">How to use</h2>
     </div>
     <p>
-        このボードはch55xduinoでの開発をターゲットにしています。以下にWindows10環境での環境構築手順を説明します。Arduino IDEは1.8.16以降をインストールしてください。
+        このボードはch55xduinoでの開発をターゲットにしています。以下にWindows10環境での環境構築手順を説明します。Arduino IDEは1.8.16以降をインストールしてください。<br />
+        Arduino IDE 2.xで使用する場合、環境によってはコンパイルエラーが発生する場合があります。その場合はArduino IDE 1.8.xを使用してください。
         <ol>
             <li>Arduino IDEの「ファイル→環境設定」を開き、「追加のボードマネージャーのURL」に次のURLを追加します。<br />
                 <a href="https://raw.githubusercontent.com/DeqingSun/ch55xduino/ch55xduino/package_ch55xduino_mcs51_index.json" target="_blank">https://raw.githubusercontent.com/DeqingSun/ch55xduino/ch55xduino/package_ch55xduino_mcs51_index.json</a>
@@ -171,6 +185,14 @@
             <li>WCHのサイトからWCHISP Studioをダウンロードしてインストールします。<br />
                 <a href="https://www.wch.cn/downloads/WCHISPTool_Setup_exe.html" target="_blank">https://www.wch.cn/downloads/WCHISPTool_Setup_exe.html</a><br />
                 これはCH552E用のドライバーをインストールするためで、ch55xduinoで開発する場合はツールそのものは使いません。
+            </li>
+
+            <li>Windows環境のArduino IDE 2.3以降で0.0.26版をインストールする場合、以下のフォルダのsdcc.shファイルを差し替えます。<br />
+                <div class="code-box">
+%USERPROFILE%\AppData\Local\Arduino15\packages\CH55xDuino\tools\MCS51Tools\2026.07.10\wrapper\sdcc.sh
+                </div>
+                差し替え用のsdcc.shファイルは以下のリンクからダウンロードできます。<br />
+                <a href="lib/ch55xduino_0.0.26_patch/sdcc.sh" target="_blank">lib/ch55xduino_0.0.26_patch/sdcc.sh</a>
             </li>
         </ol>
     </p>
